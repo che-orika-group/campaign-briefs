@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campaign Briefs — Che Orika</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Frankie */
+      --espresso: #2E1F16;
+      --blush: #F0DDD0;
+      --ivory: #FDF8F4;
+      --blush-dark: #e8cfc0;
+      --espresso-light: #5a3e30;
+      --espresso-faint: #f5ede7;
+      /* Alise */
+      --deep: #0D1B2A;
+      --pool: #48BFE3;
+      --pool-light: #89D4E4;
+      --pool-faint: #E8F6FA;
+      --sand: #F5F0EB;
+      /* Diva */
+      --burgundy: #6B1A2A;
+      --burgundy-deep: #3D0F18;
+      --burgundy-light: #8E3548;
+      --gold: #C9A84C;
+      --gold-faint: #F5EDDA;
+      --cream: #FDF9F5;
+      /* Shared */
+      --warm: #2E1F16;
+      --warm-light: #5a3e30;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ivory);
+      color: var(--espresso);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      margin: 0;
+      padding-top: 56px;
+    }
+
+    /* ─── STICKY NAV BAR ─────────────────────────────── */
+    .master-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: var(--espresso);
+      display: flex;
+      align-items: center;
+      height: 56px;
+      padding: 0 2rem;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.06em;
+      margin-right: 2.5rem;
+      flex-shrink: 0;
+    }
+    .nav-brand em { font-style: italic; font-weight: 400; }
+    .nav-tabs {
+      display: flex;
+      gap: 0;
+      height: 100%;
+      align-items: stretch;
+    }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      padding: 0 1.4rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blush);
+      opacity: 0.55;
+      cursor: pointer;
+      border: none;
+      background: none;
+      position: relative;
+      transition: opacity 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-tab:hover { opacity: 0.85; }
+    .nav-tab.active { opacity: 1; color: white; }
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 1rem; right: 1rem;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+    }
+    .nav-tab[data-tab="frankie"].active::after { background: var(--blush); }
+    .nav-tab[data-tab="alise"].active::after { background: var(--pool); }
+    .nav-tab[data-tab="diva"].active::after { background: var(--gold); }
+    .nav-tab[data-tab="creative"].active::after { background: #bbb; }
+    .nav-tab[data-tab="sophie"].active::after { background: #D4C5A9; }
+
+    /* ─── PANELS ─────────────────────────────────────── */
+    .campaign-panel { display: none; }
+    .campaign-panel.active { display: block; }
+
+    /* ─── LAYOUT ─────────────────────────────────────── */
+    .section { padding: 7rem 0; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 3rem; }
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+    .section-title em { font-style: italic; font-weight: 400; }
+    .divider { width: 100%; height: 1px; margin: 0; }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero {
+      min-height: 60vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-panel {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-panel img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+    }
+    .hero-image-overlay {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    .hero-content {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 4rem 4rem 4rem 3rem;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; margin-bottom: 2rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5rem); font-weight: 900;
+      line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 0.4rem;
+    }
+    .hero-title em { font-style: italic; font-weight: 400; display: block; }
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 1.8vw, 1.25rem); font-style: italic;
+      margin-bottom: 3rem; line-height: 1.5;
+    }
+    .hero-meta { display: flex; flex-direction: column; gap: 0.7rem; padding-top: 1.5rem; }
+    .hero-meta-row {
+      display: flex; gap: 1rem; font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .hero-meta-row span { font-weight: 600; }
+
+    /* ─── CONCEPT ─────────────────────────────────────── */
+    .concept-section { padding: 7rem 0; }
+    .concept-inner { max-width: 780px; margin: 0 auto; padding: 0 3rem; text-align: center; }
+    .concept-pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-style: italic; font-weight: 400;
+      line-height: 1.45; margin-bottom: 3rem;
+    }
+    .concept-pull-quote strong { font-style: normal; font-weight: 700; }
+    .concept-body {
+      font-size: 1rem; line-height: 1.85;
+      opacity: 0.85; max-width: 600px; margin: 0 auto;
+    }
+    .concept-keywords {
+      display: flex; justify-content: center; gap: 0.6rem;
+      flex-wrap: wrap; margin-top: 3.5rem;
+    }
+    .keyword-pill {
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.45rem 1.2rem; border-radius: 100px;
+    }
+
+    /* ─── MOOD BOARD ─────────────────────────────────── */
+    .moodboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .mood-item {
+      position: relative; aspect-ratio: 3/4;
+      border-radius: 4px; overflow: hidden;
+    }
+    .mood-item.featured {
+      grid-column: span 2; grid-row: span 2; aspect-ratio: auto;
+    }
+    .mood-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mood-overlay-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      color: white; font-family: 'Inter', sans-serif;
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 1.5rem 1rem 0.75rem; text-align: center;
+    }
+
+    /* ─── LOOK / SCENE CARDS ─────────────────────────── */
+    .looks-intro {
+      text-align: center; max-width: 560px;
+      margin: 0 auto 6rem;
+    }
+    .looks-intro p { font-size: 0.95rem; line-height: 1.8; }
+    .look-card {
+      margin-bottom: 5rem; display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0 3rem; position: relative;
+    }
+    .look-card::after {
+      content: ''; display: block; grid-column: 1 / -1;
+      height: 1px; margin-top: 4rem;
+    }
+    .look-card:last-child::after { display: none; }
+    .look-number-col {
+      display: flex; flex-direction: column;
+      align-items: center; padding-top: 0.3rem;
+    }
+    .look-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 900; line-height: 1;
+    }
+    .look-line {
+      width: 1px; flex: 1; margin-top: 1rem; min-height: 40px;
+    }
+    .look-header { margin-bottom: 2.5rem; }
+    .look-tag {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .look-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.05;
+    }
+    .look-title em {
+      font-style: italic; font-weight: 400; font-size: 0.9em;
+      display: block; margin-top: 0.2rem;
+    }
+    .look-meta-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-bottom: 3rem;
+      padding: 2rem; border-radius: 6px;
+    }
+    .look-meta-label {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .look-meta-value { font-size: 0.88rem; line-height: 1.55; }
+    .look-note {
+      border-left: 3px solid; padding: 1rem 1.4rem;
+      margin-bottom: 2.5rem; border-radius: 0 4px 4px 0;
+      font-size: 0.85rem; font-style: italic; line-height: 1.6;
+    }
+    .shots-heading {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      opacity: 0.7; margin-bottom: 1.2rem;
+    }
+    .shots-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 2rem;
+    }
+    .shot-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.6rem 0; cursor: pointer; user-select: none;
+    }
+    .shot-checkbox {
+      width: 18px; height: 18px;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      border-radius: 3px; flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; background: white;
+    }
+    .shot-item.checked .shot-checkbox::after {
+      content: ''; display: block; width: 10px; height: 6px;
+      border-left: 2px solid white; border-bottom: 2px solid white;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+    .shot-label {
+      font-size: 0.88rem; line-height: 1.5; transition: opacity 0.15s;
+    }
+    .shot-item.checked .shot-label {
+      opacity: 0.4; text-decoration: line-through;
+    }
+    .shot-type {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 1px 6px; border-radius: 2px;
+      margin-left: 0.3rem; vertical-align: middle; white-space: nowrap;
+    }
+    .look-split-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.4rem 0.9rem; border-radius: 2px; margin-bottom: 1.5rem;
+    }
+
+    /* ─── WARDROBE ────────────────────────────────────── */
+    .wardrobe-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem;
+    }
+    .wardrobe-category { border-radius: 6px; padding: 2rem; }
+    .wardrobe-cat-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 600;
+      margin-bottom: 1.5rem; padding-bottom: 1rem;
+    }
+    .wardrobe-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem 0; cursor: pointer; user-select: none;
+    }
+    .wardrobe-checkbox {
+      width: 16px; height: 16px; border-radius: 2px;
+      flex-shrink: 0; display: flex;
+      align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .wardrobe-item.checked .wardrobe-checkbox::after {
+      content: ''; display: block; width: 8px; height: 5px;
+      border-left: 1.5px solid; border-bottom: 1.5px solid;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+    .wardrobe-item-label {
+      font-size: 0.85rem; opacity: 0.8;
+      transition: opacity 0.15s; line-height: 1.4;
+    }
+    .wardrobe-item.checked .wardrobe-item-label {
+      opacity: 0.3; text-decoration: line-through;
+    }
+
+    /* ─── LOCATIONS ───────────────────────────────────── */
+    .locations-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;
+    }
+    .location-card {
+      border-radius: 6px; padding: 2rem 2rem 1.8rem;
+      position: relative; overflow: hidden;
+    }
+    .location-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; width: 3px; height: 100%;
+    }
+    .location-icon { font-size: 1.5rem; margin-bottom: 1rem; display: block; }
+    .location-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;
+    }
+    .location-desc { font-size: 0.85rem; line-height: 1.65; }
+    .location-look-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+    .loc-tag {
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 2px;
+    }
+    .location-note {
+      grid-column: 1 / -1; border-radius: 6px;
+      padding: 1.5rem 2rem; font-size: 0.85rem;
+      font-style: italic; line-height: 1.7;
+    }
+    .location-note strong { font-style: normal; font-weight: 600; }
+
+    /* ─── CONTENT PLAN ────────────────────────────────── */
+    .content-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .content-card {
+      border-radius: 6px; padding: 1.8rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .content-type-badge {
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 2px;
+      display: inline-block; margin-bottom: 1rem;
+    }
+    .content-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 600;
+      margin-bottom: 0.5rem; line-height: 1.3;
+    }
+    .content-card-source {
+      font-size: 0.8rem; opacity: 0.7; line-height: 1.5;
+    }
+    .content-card-source strong { font-weight: 600; opacity: 1; }
+
+    /* ─── MODELS ──────────────────────────────────────── */
+    .models-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    }
+    .models-grid.three-col { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .model-card { border-radius: 6px; padding: 2.5rem; }
+    .model-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 900; line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .model-role {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .model-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;
+    }
+    .model-desc {
+      font-size: 0.85rem; line-height: 1.75; margin-bottom: 1.2rem;
+    }
+    .model-looks { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+    .model-look-tag {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 2px;
+    }
+    .model-confirm-note {
+      border-radius: 4px; padding: 1rem 1.5rem;
+      font-size: 0.8rem; font-style: italic; line-height: 1.6;
+      margin-top: 1.2rem;
+    }
+    .model-color-badge {
+      display: inline-block; font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 100px; color: white;
+    }
+    .badge-blue { background: linear-gradient(135deg, #3B82F6, #6366F1); }
+    .badge-green { background: linear-gradient(135deg, #16A34A, #22C55E); }
+    .badge-purple { background: linear-gradient(135deg, #C084FC, #F472B6); }
+
+    /* ─── SCRIPT SECTION (Alise + Diva) ──────────────── */
+    .script-card {
+      max-width: 700px; margin: 0 auto;
+      background: white; border-radius: 8px;
+      padding: 3rem; box-shadow: 0 2px 20px rgba(13,27,42,0.06);
+    }
+    .script-label {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .script-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; line-height: 1.9; font-style: italic;
+    }
+    .script-note {
+      margin-top: 2rem; padding-top: 1.5rem;
+      font-size: 0.82rem; line-height: 1.7;
+    }
+
+    /* Color strip (Alise) */
+    .color-strip { display: flex; height: 60px; }
+    .swatch {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .swatch-blue { background: linear-gradient(135deg, #3B82F6, #6366F1, #F97316); color: white; }
+    .swatch-green { background: linear-gradient(135deg, #16A34A, #22C55E, #F0FDF4); color: white; }
+    .swatch-purple { background: linear-gradient(135deg, #C084FC, #F472B6, #FDE68A); color: white; }
+
+    /* This or That (Alise) */
+    .tot-section { padding: 7rem 0; }
+    .tot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .tot-card {
+      border-radius: 8px; padding: 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .tot-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 900; opacity: 0.3; line-height: 1; flex-shrink: 0;
+    }
+    .tot-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 600; line-height: 1.4;
+    }
+    .tot-vs {
+      font-style: italic; font-weight: 400; display: block;
+      margin-top: 0.3rem; font-size: 0.95rem;
+    }
+    .tot-note {
+      grid-column: 1 / -1; border-radius: 8px;
+      padding: 2rem; font-size: 0.85rem; line-height: 1.7;
+    }
+    .tot-note strong { font-weight: 600; }
+
+    /* Three Ways cards (Diva) */
+    .ways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .way-card { border-radius: 8px; padding: 2.5rem; }
+    .way-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 1rem;
+    }
+    .way-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .way-desc { font-size: 0.88rem; line-height: 1.7; }
+
+    /* Diva Script Grid */
+    .script-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .script-card-diva {
+      border-radius: 8px; padding: 2rem;
+    }
+    .script-model-tag {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .script-size {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700; margin-bottom: 0.3rem;
+    }
+    .script-height { font-size: 0.8rem; opacity: 0.7; margin-bottom: 1.5rem; }
+    .script-text-diva {
+      font-size: 0.9rem; line-height: 1.8; font-style: italic;
+    }
+    .script-note-diva {
+      grid-column: 1 / -1; border-radius: 8px;
+      padding: 2rem; font-size: 0.85rem; opacity: 0.8; line-height: 1.7;
+    }
+    .script-note-diva strong { opacity: 1; }
+
+    /* ─── CREATIVE IDEAS CARDS ────────────────────────── */
+    .creative-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    .creative-card {
+      background: white; border: 1px solid var(--blush-dark);
+      border-radius: 8px; padding: 2rem;
+    }
+    .creative-card-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 1rem;
+    }
+    .creative-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--espresso);
+    }
+    .creative-status {
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .status-approved { background: #d4edda; color: #155724; }
+    .status-concept { background: #fff3cd; color: #856404; }
+    .status-needs-work { background: #f8d7da; color: #721c24; }
+    .status-idea { background: var(--espresso-faint); color: var(--espresso-light); }
+    .creative-duration {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--espresso-light); margin-bottom: 0.8rem;
+    }
+    .creative-desc {
+      font-size: 0.88rem; color: var(--espresso-light);
+      line-height: 1.7;
+    }
+    .creative-card.full-width { grid-column: 1 / -1; }
+
+    /* ─── TEAM NOTES ─────────────────────────────────── */
+    .team-notes-section {
+      margin-top: 3rem; padding: 2rem;
+      border-radius: 8px; border: 1px dashed rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.5);
+    }
+    .team-notes-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;
+    }
+    .team-notes-area {
+      width: 100%; min-height: 120px; border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 6px; padding: 1rem; font-family: 'Inter', sans-serif;
+      font-size: 0.88rem; line-height: 1.6; resize: vertical;
+      background: white;
+    }
+    .team-notes-buttons {
+      display: flex; gap: 0.8rem; margin-top: 1rem;
+    }
+    .team-notes-buttons button {
+      padding: 0.5rem 1.2rem; border-radius: 4px;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; border: 1px solid rgba(0,0,0,0.15);
+      background: white; color: var(--espresso);
+      transition: background 0.15s;
+    }
+    .team-notes-buttons button:hover { background: var(--espresso-faint); }
+    .team-notes-buttons button.primary {
+      background: var(--espresso); color: white; border-color: var(--espresso);
+    }
+    .team-notes-buttons button.primary:hover { background: var(--espresso-light); }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    .site-footer {
+      text-align: center; padding: 4rem 3rem;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700;
+      letter-spacing: 0.08em; margin-bottom: 0.5rem;
+    }
+    .footer-brand em { font-style: italic; font-weight: 400; }
+    .footer-sub {
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase; opacity: 0.5; margin-bottom: 2.5rem;
+    }
+    .footer-divider {
+      width: 40px; height: 1px; margin: 0 auto 2rem;
+    }
+    .footer-note {
+      font-size: 0.78rem; opacity: 0.45;
+      max-width: 360px; margin: 0 auto; line-height: 1.7;
+    }
+
+    /* ─── FRANKIE THEME ───────────────────────────────── */
+    #frankie .section-label { color: var(--espresso-light); opacity: 0.6; }
+    #frankie .section-title { color: var(--espresso); }
+    #frankie .divider { background: var(--blush-dark); }
+    #frankie .hero-image-panel { background: var(--blush-dark); }
+    #frankie .hero-image-overlay { background: linear-gradient(to right, transparent 60%, var(--ivory) 100%); }
+    #frankie .hero-eyebrow { color: var(--espresso-light); }
+    #frankie .hero-title { color: var(--espresso); }
+    #frankie .hero-subtitle { color: var(--espresso-light); }
+    #frankie .hero-meta { border-top: 1px solid var(--blush-dark); }
+    #frankie .hero-meta-row { color: var(--espresso-light); }
+    #frankie .hero-meta-row span { color: var(--espresso); }
+    #frankie .concept-section { background: var(--espresso); color: var(--blush); }
+    #frankie .concept-section .section-label { color: var(--blush); opacity: 0.5; }
+    #frankie .concept-section .section-title { color: var(--blush); }
+    #frankie .concept-pull-quote { color: var(--ivory); }
+    #frankie .concept-pull-quote strong { color: var(--blush); }
+    #frankie .concept-body { color: var(--blush); }
+    #frankie .keyword-pill { border-color: rgba(240,221,208,0.35); color: var(--blush); }
+    #frankie .mood-item { background: var(--blush); }
+    #frankie .mood-overlay-label { background: linear-gradient(transparent, rgba(46,31,22,0.8)); }
+    #frankie .look-number { color: var(--blush-dark); }
+    #frankie .look-line { background: var(--blush-dark); }
+    #frankie .look-tag { color: var(--espresso-light); opacity: 0.55; }
+    #frankie .look-title { color: var(--espresso); }
+    #frankie .look-title em { color: var(--espresso-light); }
+    #frankie .look-meta-grid { background: var(--espresso-faint); }
+    #frankie .look-meta-label { color: var(--espresso-light); opacity: 0.55; }
+    #frankie .look-meta-value { color: var(--espresso); }
+    #frankie .look-note { background: var(--blush); border-color: var(--espresso-light); color: var(--espresso-light); }
+    #frankie .look-card::after { background: var(--blush-dark); }
+    #frankie .shots-heading { color: var(--espresso-light); }
+    #frankie .shot-checkbox { border-color: var(--blush-dark); }
+    #frankie .shot-item.checked .shot-checkbox { background: var(--espresso); border-color: var(--espresso); }
+    #frankie .shot-label { color: var(--espresso); }
+    #frankie .shot-type { color: var(--espresso-light); background: var(--blush); }
+    #frankie .look-split-tag { background: var(--espresso); color: var(--blush); }
+    #frankie .looks-intro p { color: var(--espresso-light); }
+    #frankie .wardrobe-section { background: var(--espresso); color: var(--blush); }
+    #frankie .wardrobe-section .section-label { color: var(--blush); opacity: 0.45; }
+    #frankie .wardrobe-section .section-title { color: var(--ivory); }
+    #frankie .wardrobe-category { background: rgba(240,221,208,0.06); border: 1px solid rgba(240,221,208,0.12); }
+    #frankie .wardrobe-cat-title { color: var(--ivory); border-bottom-color: rgba(240,221,208,0.15); }
+    #frankie .wardrobe-checkbox { border-color: rgba(240,221,208,0.3); }
+    #frankie .wardrobe-item.checked .wardrobe-checkbox { background: var(--blush); border-color: var(--blush); }
+    #frankie .wardrobe-item.checked .wardrobe-checkbox::after { border-color: var(--espresso); }
+    #frankie .wardrobe-item-label { color: var(--blush); }
+    #frankie .location-card { background: var(--blush); }
+    #frankie .location-card::before { background: var(--espresso); }
+    #frankie .location-name { color: var(--espresso); }
+    #frankie .location-desc { color: var(--espresso-light); }
+    #frankie .loc-tag { background: var(--espresso); color: var(--blush); }
+    #frankie .location-note { background: var(--espresso-faint); border: 1px solid var(--blush-dark); color: var(--espresso-light); }
+    #frankie .location-note strong { color: var(--espresso); }
+    #frankie .content-card { border: 1px solid var(--blush-dark); }
+    #frankie .content-card:hover { border-color: var(--espresso-light); box-shadow: 0 4px 20px rgba(46,31,22,0.06); }
+    #frankie .content-type-badge { background: var(--blush); color: var(--espresso-light); }
+    #frankie .content-card-title { color: var(--espresso); }
+    #frankie .content-card-source { color: var(--espresso-light); }
+    #frankie .content-card-source strong { color: var(--espresso); }
+    #frankie .models-section { background: var(--blush); }
+    #frankie .model-card { background: var(--ivory); }
+    #frankie .model-number { color: var(--blush-dark); }
+    #frankie .model-role { color: var(--espresso-light); opacity: 0.6; }
+    #frankie .model-title { color: var(--espresso); }
+    #frankie .model-desc { color: var(--espresso-light); }
+    #frankie .model-look-tag { background: var(--blush); color: var(--espresso); }
+    #frankie .model-confirm-note { background: var(--espresso); color: var(--blush); }
+    #frankie .site-footer { background: var(--espresso); color: var(--blush); }
+    #frankie .footer-brand { color: var(--ivory); }
+    #frankie .footer-sub { color: var(--blush); }
+    #frankie .footer-divider { background: rgba(240,221,208,0.25); }
+    #frankie .footer-note { color: var(--blush); }
+
+    /* ─── ALISE THEME ─────────────────────────────────── */
+    #alise { background: var(--ivory); }
+    #alise .section-label { color: var(--pool); opacity: 0.8; }
+    #alise .section-title { color: var(--deep); }
+    #alise .divider { background: var(--pool-faint); }
+    #alise .hero-image-panel { background: var(--pool-faint); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+    #alise .hero-image-overlay { background: linear-gradient(to right, transparent 60%, var(--ivory) 100%); }
+    #alise .hero-eyebrow { color: var(--pool); }
+    #alise .hero-title { color: var(--deep); }
+    #alise .hero-subtitle { color: var(--warm-light); }
+    #alise .hero-meta { border-top: 1px solid var(--pool-faint); }
+    #alise .hero-meta-row { color: var(--warm-light); }
+    #alise .hero-meta-row span { color: var(--deep); }
+    #alise .concept-section { background: var(--deep); color: var(--pool-light); }
+    #alise .concept-section .section-label { color: var(--pool); opacity: 0.5; }
+    #alise .concept-section .section-title { color: white; }
+    #alise .concept-pull-quote { color: white; }
+    #alise .concept-pull-quote strong { color: var(--pool); }
+    #alise .concept-body { color: var(--pool-light); }
+    #alise .keyword-pill { border-color: rgba(72,191,227,0.35); color: var(--pool-light); }
+    #alise .script-section { background: var(--sand); }
+    #alise .script-label { color: var(--pool); }
+    #alise .script-text { color: var(--deep); }
+    #alise .script-text strong { background: linear-gradient(to bottom, transparent 60%, rgba(72,191,227,0.2) 60%); }
+    #alise .script-note { border-top-color: var(--pool-faint); color: var(--warm-light); }
+    #alise .mood-item { background: var(--pool-faint); }
+    #alise .mood-overlay-label { background: linear-gradient(transparent, rgba(13,27,42,0.8)); }
+    #alise .look-number { color: var(--pool-faint); }
+    #alise .look-line { background: var(--pool-faint); }
+    #alise .look-tag { color: var(--pool); opacity: 0.8; }
+    #alise .look-title { color: var(--deep); }
+    #alise .look-title em { color: var(--warm-light); }
+    #alise .look-meta-grid { background: var(--pool-faint); }
+    #alise .look-meta-label { color: var(--pool); }
+    #alise .look-meta-value { color: var(--deep); }
+    #alise .look-note { background: var(--pool-faint); border-color: var(--pool); color: var(--warm-light); }
+    #alise .look-card::after { background: var(--pool-faint); }
+    #alise .shots-heading { color: var(--pool); }
+    #alise .shot-checkbox { border-color: var(--pool-faint); }
+    #alise .shot-item.checked .shot-checkbox { background: var(--deep); border-color: var(--deep); }
+    #alise .shot-label { color: var(--deep); }
+    #alise .shot-type { color: var(--pool); background: var(--pool-faint); }
+    #alise .looks-intro p { color: var(--warm-light); }
+    #alise .tot-section { background: var(--deep); color: white; }
+    #alise .tot-section .section-label { color: var(--pool); opacity: 0.5; }
+    #alise .tot-section .section-title { color: white; }
+    #alise .tot-card { background: rgba(72,191,227,0.08); border: 1px solid rgba(72,191,227,0.15); }
+    #alise .tot-number { color: var(--pool); }
+    #alise .tot-question { color: white; }
+    #alise .tot-vs { color: var(--pool); }
+    #alise .tot-note { background: rgba(72,191,227,0.05); border: 1px solid rgba(72,191,227,0.1); color: var(--pool-light); }
+    #alise .tot-note strong { color: white; }
+    #alise .wardrobe-section { background: var(--deep); color: var(--pool-light); }
+    #alise .wardrobe-section .section-label { color: var(--pool); opacity: 0.45; }
+    #alise .wardrobe-section .section-title { color: white; }
+    #alise .wardrobe-category { background: rgba(72,191,227,0.06); border: 1px solid rgba(72,191,227,0.12); }
+    #alise .wardrobe-cat-title { color: white; border-bottom-color: rgba(72,191,227,0.15); }
+    #alise .wardrobe-checkbox { border-color: rgba(72,191,227,0.3); }
+    #alise .wardrobe-item.checked .wardrobe-checkbox { background: var(--pool); border-color: var(--pool); }
+    #alise .wardrobe-item.checked .wardrobe-checkbox::after { border-color: var(--deep); }
+    #alise .wardrobe-item-label { color: var(--pool-light); }
+    #alise .location-card { background: var(--pool-faint); }
+    #alise .location-card::before { background: var(--pool); }
+    #alise .location-name { color: var(--deep); }
+    #alise .location-desc { color: var(--warm-light); }
+    #alise .loc-tag { background: var(--deep); color: var(--pool-light); }
+    #alise .location-note { background: var(--sand); border: 1px solid var(--pool-faint); color: var(--warm-light); }
+    #alise .location-note strong { color: var(--deep); }
+    #alise .content-card { border: 1px solid var(--pool-faint); }
+    #alise .content-card:hover { border-color: var(--pool); box-shadow: 0 4px 20px rgba(13,27,42,0.06); }
+    #alise .content-type-badge { background: var(--pool-faint); color: var(--pool); }
+    #alise .content-card-title { color: var(--deep); }
+    #alise .content-card-source { color: var(--warm-light); }
+    #alise .content-card-source strong { color: var(--deep); }
+    #alise .models-section { background: var(--pool-faint); }
+    #alise .model-card { background: white; }
+    #alise .model-number { color: var(--pool-faint); }
+    #alise .model-role { color: var(--pool); }
+    #alise .model-title { color: var(--deep); }
+    #alise .model-desc { color: var(--warm-light); }
+    #alise .model-look-tag { background: var(--pool-faint); color: var(--deep); }
+    #alise .site-footer { background: var(--deep); color: var(--pool-light); }
+    #alise .footer-brand { color: white; }
+    #alise .footer-sub { color: var(--pool-light); }
+    #alise .footer-divider { background: rgba(72,191,227,0.25); }
+    #alise .footer-note { color: var(--pool-light); }
+
+    /* ─── DIVA THEME ──────────────────────────────────── */
+    #diva { background: var(--cream); color: var(--warm); }
+    #diva .section-label { color: var(--burgundy-light); opacity: 0.8; }
+    #diva .section-title { color: var(--burgundy-deep); }
+    #diva .divider { background: var(--gold-faint); }
+    #diva .hero-image-panel { background: var(--burgundy-deep); display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    #diva .hero-image-overlay { background: linear-gradient(to right, transparent 60%, var(--cream) 100%); }
+    #diva .hero-eyebrow { color: var(--burgundy-light); }
+    #diva .hero-title { color: var(--burgundy-deep); }
+    #diva .hero-subtitle { color: var(--warm-light); }
+    #diva .hero-meta { border-top: 1px solid var(--gold-faint); }
+    #diva .hero-meta-row { color: var(--warm-light); }
+    #diva .hero-meta-row span { color: var(--burgundy-deep); }
+    #diva .concept-section { background: var(--burgundy-deep); color: var(--gold); }
+    #diva .concept-section .section-label { color: var(--gold); opacity: 0.5; }
+    #diva .concept-pull-quote { color: white; }
+    #diva .concept-pull-quote strong { color: var(--gold); }
+    #diva .concept-body { color: var(--gold); }
+    #diva .keyword-pill { border-color: rgba(201,168,76,0.35); color: var(--gold); }
+    #diva .way-card { background: white; border: 1px solid var(--gold-faint); }
+    #diva .way-number { color: var(--gold-faint); }
+    #diva .way-title { color: var(--burgundy-deep); }
+    #diva .way-desc { color: var(--warm-light); }
+    #diva .scripts-section { background: var(--burgundy-deep); color: var(--gold); }
+    #diva .scripts-section .section-label { color: var(--gold); opacity: 0.5; }
+    #diva .scripts-section .section-title { color: white; }
+    #diva .script-card-diva { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15); }
+    #diva .script-model-tag { color: var(--gold); }
+    #diva .script-size { color: white; }
+    #diva .script-height { color: var(--gold); }
+    #diva .script-text-diva { color: rgba(255,255,255,0.85); }
+    #diva .script-note-diva { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.1); color: var(--gold); }
+    #diva .script-note-diva strong { color: white; }
+    #diva .mood-item { background: var(--gold-faint); }
+    #diva .mood-overlay-label { background: linear-gradient(transparent, rgba(61,15,24,0.85)); }
+    #diva .look-number { color: var(--gold-faint); }
+    #diva .look-line { background: var(--gold-faint); }
+    #diva .look-tag { color: var(--burgundy-light); opacity: 0.8; }
+    #diva .look-title { color: var(--burgundy-deep); }
+    #diva .look-title em { color: var(--warm-light); }
+    #diva .look-meta-grid { background: var(--gold-faint); }
+    #diva .look-meta-label { color: var(--burgundy-light); }
+    #diva .look-meta-value { color: var(--warm); }
+    #diva .look-note { background: var(--gold-faint); border-color: var(--burgundy); color: var(--warm-light); }
+    #diva .look-card::after { background: var(--gold-faint); }
+    #diva .shots-heading { color: var(--burgundy-light); }
+    #diva .shot-checkbox { border-color: var(--gold-faint); }
+    #diva .shot-item.checked .shot-checkbox { background: var(--burgundy-deep); border-color: var(--burgundy-deep); }
+    #diva .shot-label { color: var(--warm); }
+    #diva .shot-type { color: var(--burgundy); background: var(--gold-faint); }
+    #diva .looks-intro p { color: var(--warm-light); }
+    #diva .wardrobe-section { background: var(--burgundy-deep); color: var(--gold); }
+    #diva .wardrobe-section .section-label { color: var(--gold); opacity: 0.45; }
+    #diva .wardrobe-section .section-title { color: white; }
+    #diva .wardrobe-category { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.12); }
+    #diva .wardrobe-cat-title { color: white; border-bottom-color: rgba(201,168,76,0.15); }
+    #diva .wardrobe-checkbox { border-color: rgba(201,168,76,0.3); }
+    #diva .wardrobe-item.checked .wardrobe-checkbox { background: var(--gold); border-color: var(--gold); }
+    #diva .wardrobe-item.checked .wardrobe-checkbox::after { border-color: var(--burgundy-deep); }
+    #diva .wardrobe-item-label { color: var(--gold); }
+    #diva .location-card { background: var(--gold-faint); }
+    #diva .location-card::before { background: var(--burgundy); }
+    #diva .location-name { color: var(--burgundy-deep); }
+    #diva .location-desc { color: var(--warm-light); }
+    #diva .loc-tag { background: var(--burgundy-deep); color: var(--gold); }
+    #diva .location-note { background: white; border: 1px solid var(--gold-faint); color: var(--warm-light); }
+    #diva .location-note strong { color: var(--burgundy-deep); }
+    #diva .content-card { border: 1px solid var(--gold-faint); }
+    #diva .content-card:hover { border-color: var(--burgundy-light); box-shadow: 0 4px 20px rgba(61,15,24,0.06); }
+    #diva .content-type-badge { background: var(--gold-faint); color: var(--burgundy); }
+    #diva .content-card-title { color: var(--burgundy-deep); }
+    #diva .content-card-source { color: var(--warm-light); }
+    #diva .content-card-source strong { color: var(--burgundy-deep); }
+    #diva .models-section { background: var(--gold-faint); }
+    #diva .model-card { background: white; }
+    #diva .model-number { color: var(--gold-faint); }
+    #diva .model-role { color: var(--burgundy-light); }
+    #diva .model-title { color: var(--burgundy-deep); }
+    #diva .model-desc { color: var(--warm-light); }
+    #diva .model-look-tag { background: var(--gold-faint); color: var(--burgundy-deep); }
+    #diva .site-footer { background: var(--burgundy-deep); color: var(--gold); }
+    #diva .footer-brand { color: white; }
+    #diva .footer-sub { color: var(--gold); }
+    #diva .footer-divider { background: rgba(201,168,76,0.25); }
+    #diva .footer-note { color: var(--gold); }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-image-panel { height: 55vw; }
+      .hero-content { padding: 3rem 2rem; }
+      .moodboard-grid { grid-template-columns: repeat(2, 1fr); }
+      .mood-item.featured { grid-column: span 2; }
+      .wardrobe-grid { grid-template-columns: 1fr 1fr; }
+      .content-grid { grid-template-columns: 1fr 1fr; }
+      .locations-grid { grid-template-columns: 1fr; }
+      .models-grid, .models-grid.three-col { grid-template-columns: 1fr; }
+      .look-card { grid-template-columns: 1fr; gap: 1rem; }
+      .look-number-col { flex-direction: row; padding: 0; align-items: center; }
+      .look-line { display: none; }
+      .look-number { font-size: 2.5rem; }
+      .look-meta-grid { grid-template-columns: 1fr; }
+      .shots-grid { grid-template-columns: 1fr; }
+      .tot-grid { grid-template-columns: 1fr; }
+      .ways-grid, .script-grid { grid-template-columns: 1fr; }
+      .creative-grid { grid-template-columns: 1fr; }
+      .nav-tabs { overflow-x: auto; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0 1.5rem; }
+      .section { padding: 5rem 0; }
+      .wardrobe-grid { grid-template-columns: 1fr; }
+      .content-grid { grid-template-columns: 1fr; }
+      .moodboard-grid { grid-template-columns: 1fr 1fr; }
+      .master-nav { padding: 0 1rem; }
+      .nav-brand { font-size: 1rem; margin-right: 1rem; }
+      .nav-tab { padding: 0 0.8rem; font-size: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── STICKY NAV ─────────────────────────────────────── -->
+<nav class="master-nav">
+  <div class="nav-brand">Che <em>Orika</em></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-tab="frankie">Frankie Set</button>
+    <button class="nav-tab" data-tab="alise">Alise Tops</button>
+    <button class="nav-tab" data-tab="diva">Diva Playsuit</button>
+    <button class="nav-tab" data-tab="sophie">Sophie Dress</button>
+    <button class="nav-tab" data-tab="creative">Creative Ideas</button>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FRANKIE SET
+     ═══════════════════════════════════════════════════════ -->
+<div class="campaign-panel active" id="frankie">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image-panel">
+      <img src="https://res.cloudinary.com/dp1rqomsd/image/upload/cheorika/production/brands/2f0536ad-4aae-476f-b006-2a8119bc0c4a/products/631e1505-262b-47a2-a066-9f0477cf2dc5/p5ygfhulwyyjj81izqyw" alt="The Frankie Set — Blue & White Pinstripe" />
+      <div class="hero-image-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Che Orika · Campaign Brief</div>
+      <h1 class="hero-title">The<em>Frankie</em>Set</h1>
+      <p class="hero-subtitle">"She just threw it on."</p>
+      <div class="hero-meta">
+        <div class="hero-meta-row">Product &nbsp;<span>Pinstripe Shirt + Bubble Mini Skirt</span></div>
+        <div class="hero-meta-row">Palette &nbsp;<span>Blue / White / Ivory</span></div>
+        <div class="hero-meta-row">Looks &nbsp;<span>5 Looks · 2 Models</span></div>
+        <div class="hero-meta-row">Platform &nbsp;<span>Instagram · TikTok</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONCEPT -->
+  <section class="concept-section">
+    <div class="concept-inner">
+      <div class="section-label">02 · The Concept</div>
+      <p class="concept-pull-quote">
+        She doesn't explain her outfit.<br/>
+        She doesn't <strong>second-guess</strong> it either.
+      </p>
+      <p class="concept-body">
+        Preppy pinstripe meets playful bubble skirt. Structured and spontaneous in one set. The Frankie Set girl knows who she is — this campaign captures her in motion. Real moments, real confidence, shot like a film still.
+      </p>
+      <div class="concept-keywords">
+        <span class="keyword-pill">Effortless</span>
+        <span class="keyword-pill">Confident</span>
+        <span class="keyword-pill">Cinematic</span>
+        <span class="keyword-pill">Preppy x Playful</span>
+        <span class="keyword-pill">Her Rules</span>
+        <span class="keyword-pill">In Motion</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MOOD BOARD -->
+  <section class="section" id="frankie-moodboard">
+    <div class="container">
+      <div class="section-label">03 · Mood Board</div>
+      <h2 class="section-title">The Vibe,<em>Visualised</em></h2>
+      <div class="moodboard-grid">
+        <div class="mood-item featured">
+          <img src="https://res.cloudinary.com/dp1rqomsd/image/upload/cheorika/production/brands/2f0536ad-4aae-476f-b006-2a8119bc0c4a/products/631e1505-262b-47a2-a066-9f0477cf2dc5/p5ygfhulwyyjj81izqyw" alt="The Frankie Set" />
+          <div class="mood-overlay-label">The Frankie Set · Hero Product</div>
+        </div>
+        <div class="mood-item"><img src="ref_pool_girl.png" alt="Pool Girl reference" /><div class="mood-overlay-label">Pool Girl · Relaxed, Summer</div></div>
+        <div class="mood-item"><img src="ref_cafe_girl.png" alt="Cafe Girl reference" /><div class="mood-overlay-label">Cafe Girl · Coffee, Golden Light</div></div>
+        <div class="mood-item"><img src="ref_car_lean.png" alt="Car Lean reference" /><div class="mood-overlay-label">Car Lean · Street, Candid</div></div>
+        <div class="mood-item"><img src="ref_miu_miu.png" alt="Miu Miu reference" /><div class="mood-overlay-label">Miu Miu · Preppy, Structured</div></div>
+        <div class="mood-item"><img src="ref_loafers_socks.png" alt="Loafers reference" /><div class="mood-overlay-label">Loafers + Socks · Preppy Street</div></div>
+        <div class="mood-item"><img src="ref_soft_girl.png" alt="Soft Girl reference" /><div class="mood-overlay-label">Soft Girl · Feminine, Delicate</div></div>
+        <div class="mood-item"><img src="ref_loewe_bag.jpg" alt="Loewe bag reference" /><div class="mood-overlay-label">Oversized Top · Shopping, Loafers</div></div>
+        <div class="mood-item"><img src="ref_blazer_street.png" alt="Blazer street reference" /><div class="mood-overlay-label">Blazer + Skirt · Urban, Layered</div></div>
+        <div class="mood-item"><img src="ref_vogue_editorial.png" alt="Vogue editorial reference" /><div class="mood-overlay-label">Editorial Contrast · Bold Setting</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THE LOOKS -->
+  <section class="section" id="frankie-looks">
+    <div class="container">
+      <div class="section-label">04 · The Looks</div>
+      <h2 class="section-title">Shoot Day<em>Breakdown</em></h2>
+      <div class="looks-intro">
+        <p>Five setups. Move through them in order — the lighting and locations are sequenced for efficiency.
+        The content gets assembled from these shots afterwards. Shoot the shots, then build the content.</p>
+      </div>
+
+      <!-- LOOK 1 -->
+      <div class="look-card" id="frankie-look1">
+        <div class="look-number-col"><div class="look-number">01</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header">
+            <div class="look-tag">Look 1 · The Full Set</div>
+            <h3 class="look-title">Her Rules<em>Full Frankie Set · Cafe Exterior</em></h3>
+          </div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Full Frankie Set (shirt buttoned + bubble skirt), loafers, white socks, crossbody bag</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Cafe exterior — walking out with coffee</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Energy</div><div class="look-meta-value">Cinematic, confident, mid-stride — not posing, never posing</div></div>
+          </div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-frankie-1-1"><div class="shot-checkbox"></div><span class="shot-label">Close-up of hand grabbing coffee off counter — pinstripe sleeve visible</span></div>
+            <div class="shot-item" data-id="master-frankie-1-2"><div class="shot-checkbox"></div><span class="shot-label">Walking out of cafe, full outfit reveal</span></div>
+            <div class="shot-item" data-id="master-frankie-1-3"><div class="shot-checkbox"></div><span class="shot-label">Mid-stride walking shot, skirt bouncing</span></div>
+            <div class="shot-item" data-id="master-frankie-1-4"><div class="shot-checkbox"></div><span class="shot-label">Sitting down, crossing legs, skirt sits perfectly</span></div>
+            <div class="shot-item" data-id="master-frankie-1-5"><div class="shot-checkbox"></div><span class="shot-label">Looking back over shoulder (the close shot)</span></div>
+            <div class="shot-item" data-id="master-frankie-1-6"><div class="shot-checkbox"></div><span class="shot-label">Detail: close-up of ruffle hem in motion</span></div>
+            <div class="shot-item" data-id="master-frankie-1-7"><div class="shot-checkbox"></div><span class="shot-label">Detail: pinstripe fabric texture</span></div>
+            <div class="shot-item" data-id="master-frankie-1-8"><div class="shot-checkbox"></div><span class="shot-label">Standing portrait, full outfit <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-frankie-1-9"><div class="shot-checkbox"></div><span class="shot-label">Holding CO branded paper bag <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 2 -->
+      <div class="look-card" id="frankie-look2">
+        <div class="look-number-col"><div class="look-number">02</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header">
+            <div class="look-tag">Look 2 · Street Vibe</div>
+            <h3 class="look-title">Off Duty<em>Bubble Skirt + Tank · Car + Sidewalk</em></h3>
+          </div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Bubble skirt + fitted tank, loafers + socks, sunglasses, crossbody bag</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Leaning against a car / walking on sidewalk</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Energy</div><div class="look-meta-value">Cool, casual, sunglasses on, phone in hand, unbothered</div></div>
+          </div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-frankie-2-1"><div class="shot-checkbox"></div><span class="shot-label">Leaning on car, one hand in pocket/on hip, looking away</span></div>
+            <div class="shot-item" data-id="master-frankie-2-2"><div class="shot-checkbox"></div><span class="shot-label">Walking shot from behind, skirt movement</span></div>
+            <div class="shot-item" data-id="master-frankie-2-3"><div class="shot-checkbox"></div><span class="shot-label">Standing, scrolling phone, candid</span></div>
+            <div class="shot-item" data-id="master-frankie-2-4"><div class="shot-checkbox"></div><span class="shot-label">Detail: sunglasses + outfit from mid-body up</span></div>
+            <div class="shot-item" data-id="master-frankie-2-5"><div class="shot-checkbox"></div><span class="shot-label">Against car, full body <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-frankie-2-6"><div class="shot-checkbox"></div><span class="shot-label">Candid, looking at phone <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 3 -->
+      <div class="look-card" id="frankie-look3">
+        <div class="look-number-col"><div class="look-number">03</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header">
+            <div class="look-tag">Look 3 · Soft Girl</div>
+            <h3 class="look-title">Main Character<em>Bubble Skirt + Kitten Heels · Outdoor Seating</em></h3>
+          </div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Bubble skirt + knitted collar top or tank, slipper/kitten heels, tiny bag, delicate bracelets, nails done</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Cafe terrace / outdoor seating / pretty textured wall</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Energy</div><div class="look-meta-value">Feminine, delicate, everything intentional — soft girl aesthetic done right</div></div>
+          </div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-frankie-3-1"><div class="shot-checkbox"></div><span class="shot-label">Sitting, legs crossed, adjusting bracelet</span></div>
+            <div class="shot-item" data-id="master-frankie-3-2"><div class="shot-checkbox"></div><span class="shot-label">Walking slowly, tiny bag in hand, heels clicking</span></div>
+            <div class="shot-item" data-id="master-frankie-3-3"><div class="shot-checkbox"></div><span class="shot-label">Close-up of hands/nails/bracelets with skirt in background</span></div>
+            <div class="shot-item" data-id="master-frankie-3-4"><div class="shot-checkbox"></div><span class="shot-label">Looking at reflection in window or mirror</span></div>
+            <div class="shot-item" data-id="master-frankie-3-5"><div class="shot-checkbox"></div><span class="shot-label">Seated portrait, soft light <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-frankie-3-6"><div class="shot-checkbox"></div><span class="shot-label">Detail of accessories + skirt <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 4 -->
+      <div class="look-card" id="frankie-look4">
+        <div class="look-number-col"><div class="look-number">04</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header">
+            <div class="look-tag">Look 4 · Layered</div>
+            <h3 class="look-title">The Jacket Move<em>Shirt Open as Jacket · Same Locations</em></h3>
+          </div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Tank underneath + Frankie shirt worn OPEN as a jacket + bubble skirt (or wide-leg trousers)</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Same locations — transitional shot, minimal location movement</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Energy</div><div class="look-meta-value">Effortless — like she threw it on because the wind picked up</div></div>
+          </div>
+          <div class="look-note">The shirt as a jacket shows versatility. Same piece, three different ways to wear it. This is the "one item, your whole wardrobe" proof of concept.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-frankie-4-1"><div class="shot-checkbox"></div><span class="shot-label">Walking with shirt open, flowing behind her</span></div>
+            <div class="shot-item" data-id="master-frankie-4-2"><div class="shot-checkbox"></div><span class="shot-label">Adjusting the shirt collar — the casual move</span></div>
+            <div class="shot-item" data-id="master-frankie-4-3"><div class="shot-checkbox"></div><span class="shot-label">Bonus: same shirt over tank with wide-leg trousers <span class="shot-type">Bonus</span></span></div>
+            <div class="shot-item" data-id="master-frankie-4-4"><div class="shot-checkbox"></div><span class="shot-label">Full body, shirt-as-jacket look <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 5 -->
+      <div class="look-card" id="frankie-look5">
+        <div class="look-number-col"><div class="look-number">05</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header">
+            <div class="look-tag">Look 5 · Style Swap</div>
+            <h3 class="look-title">How We'd Each Style It<em>Same Bubble Skirt · Different Girls</em></h3>
+          </div>
+          <div class="look-split-tag">Requires 2-3 Friends on Set</div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">The Setup</div><div class="look-meta-value">2-3 friends each style the same bubble skirt their own way. No talking in the video — just showing how each person wears the full set differently</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">In-store or simple setup with clean background. Quick transitions between each person's styling</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">The Point</div><div class="look-meta-value">Same skirt, completely different outfits. Each girl brings her own personality to the piece. The skirt is the constant — they bring the identity</div></div>
+          </div>
+          <div class="look-note">No voiceover, no talking. Just visual transitions between each friend's version. Let the styling speak for itself. Keep the energy casual and real — these are friends, not models.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-frankie-5-1"><div class="shot-checkbox"></div><span class="shot-label">Friend 1 full outfit reveal — her styling of the bubble skirt</span></div>
+            <div class="shot-item" data-id="master-frankie-5-2"><div class="shot-checkbox"></div><span class="shot-label">Transition cut to Friend 2 — completely different styling, same skirt</span></div>
+            <div class="shot-item" data-id="master-frankie-5-3"><div class="shot-checkbox"></div><span class="shot-label">Transition cut to Friend 3 — third way to wear it (if 3 friends)</span></div>
+            <div class="shot-item" data-id="master-frankie-5-4"><div class="shot-checkbox"></div><span class="shot-label">Close-up of the skirt in each version — same ruffle, different vibe <span class="shot-type">Key</span></span></div>
+            <div class="shot-item" data-id="master-frankie-5-5"><div class="shot-checkbox"></div><span class="shot-label">All friends together, final group shot <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WARDROBE -->
+  <section class="section wardrobe-section" id="frankie-wardrobe">
+    <div class="container">
+      <div class="section-label">05 · Accessories &amp; Wardrobe</div>
+      <h2 class="section-title" style="color:var(--ivory);">What We<em>Need on Set</em></h2>
+      <div class="wardrobe-grid">
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Wardrobe</div>
+          <div class="wardrobe-item" data-id="master-frankie-w1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">The Frankie Set (pinstripe shirt + bubble mini)</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Fitted white tank top</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Fitted black tank top</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Knitted collar top</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Oversized tee</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w6"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Blazer</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w7"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Jeans (for 3-checks clip)</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-w8"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Wide-leg / big trousers</span></div>
+        </div>
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Shoes &amp; Accessories</div>
+          <div class="wardrobe-item" data-id="master-frankie-ws1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Loafers</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-ws2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">White socks (tall)</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-ws3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Sambas or Vans</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-ws4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Slipper heels / kitten heels</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-ws5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Pointed heels</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wa1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Sunglasses — cat-eye or vintage</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wa2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Small crossbody bag</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wa3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Tiny bag (soft girl)</span></div>
+        </div>
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Details, Props &amp; Beauty</div>
+          <div class="wardrobe-item" data-id="master-frankie-wd1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Delicate bracelets</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wd2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Thin chain necklace</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wd3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Hair tie / ribbon options</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wd4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Cap (for style swap look)</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wp1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Coffee cup or smoothie</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wp2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Phone (prop)</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wp3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">CO branded paper bag</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wb1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Nails done — neutral/french/soft tone</span></div>
+          <div class="wardrobe-item" data-id="master-frankie-wb2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Hair styling options sorted</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LOCATIONS -->
+  <section class="section" id="frankie-locations">
+    <div class="container">
+      <div class="section-label">06 · Location Scout</div>
+      <h2 class="section-title">Where We<em>Shoot</em></h2>
+      <div class="locations-grid">
+        <div class="location-card"><span class="location-icon">&#9749;</span><div class="location-name">Cafe — Primary</div><div class="location-desc">Cafe Flour (Maitama) or Vintage Cafe. Need: outdoor/exterior access, clean entrance, outdoor seating. Natural light is non-negotiable.</div><div class="location-look-tags"><span class="loc-tag">Look 1</span><span class="loc-tag">Look 3</span></div></div>
+        <div class="location-card"><span class="location-icon">&#128663;</span><div class="location-name">Car + Sidewalk</div><div class="location-desc">An aesthetic parked car on a clean Maitama or Wuse II street. Needs shadow/shade or good direct light — avoid harsh mid-day overhead sun.</div><div class="location-look-tags"><span class="loc-tag">Look 2</span></div></div>
+        <div class="location-card"><span class="location-icon">&#127807;</span><div class="location-name">Walking Path / Street</div><div class="location-desc">Clean sidewalk in Maitama/Wuse with minimal distractions. Used for walking shots — needs enough length for 3-5 second tracking shots.</div><div class="location-look-tags"><span class="loc-tag">Look 1</span><span class="loc-tag">Look 2</span><span class="loc-tag">Look 4</span></div></div>
+        <div class="location-card"><span class="location-icon">&#129681;</span><div class="location-name">Outdoor Terrace / Wall</div><div class="location-desc">Restaurant terrace or park bench with texture. Pretty wall behind for soft girl portraits. Needs soft, diffused light — mid-morning or late afternoon.</div><div class="location-look-tags"><span class="loc-tag">Look 3</span><span class="loc-tag">Look 4</span></div></div>
+        <div class="location-note"><strong>Location Strategy:</strong> Aim to find one block in Maitama that gives you cafe + sidewalk + outdoor seating + a parked car within walking distance. Moving between locations wastes the golden hour. Scout the day before — walk the actual block at the time of day you plan to shoot.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTENT PLAN -->
+  <section class="section" id="frankie-content">
+    <div class="container">
+      <div class="section-label">07 · Post-Production Plan</div>
+      <h2 class="section-title">What We're<em>Making From This</em></h2>
+      <div class="content-grid">
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">Campaign Reel</div><div class="content-card-source">25-30 sec. The showstopper. <strong>Pulls from:</strong> Looks 1, 2, 3</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">Street Vibe Reel</div><div class="content-card-source">Off-duty, cool girl. <strong>Pulls from:</strong> Look 2</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">Soft Girl Reel</div><div class="content-card-source">Feminine, intentional. <strong>Pulls from:</strong> Look 3</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">Style Swap — How We'd Each Style It</div><div class="content-card-source">Friends each style the same bubble skirt their way. Visual transitions, no talking. <strong>Pulls from:</strong> Look 5</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">One Skirt, Different Tops</div><div class="content-card-source">Transition edit — versatility proof. <strong>Pulls from:</strong> Looks 1, 2, 3, 4</div></div>
+        <div class="content-card"><span class="content-type-badge">Educational</span><div class="content-card-title">3 Checks</div><div class="content-card-source">Voiceover edit. Quality assurance storytelling. <strong>Pulls from:</strong> All looks</div></div>
+        <div class="content-card"><span class="content-type-badge">BTS</span><div class="content-card-title">Behind the Scenes</div><div class="content-card-source">Candid shoot day clips. Authentic, unpolished. <strong>Pulls from:</strong> All day</div></div>
+        <div class="content-card"><span class="content-type-badge">Carousel</span><div class="content-card-title">Photo Carousel</div><div class="content-card-source">Best stills, editorial format. <strong>Pulls from:</strong> All looks (photo shots)</div></div>
+        <div class="content-card"><span class="content-type-badge">Stories</span><div class="content-card-title">Story Content</div><div class="content-card-source">Polls, clips, the CO bag moment, try-on content. <strong>Pulls from:</strong> All looks</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MODELS -->
+  <section class="section models-section" id="frankie-models">
+    <div class="container">
+      <div class="section-label">08 · Models</div>
+      <h2 class="section-title">Who We<em>Need</em></h2>
+      <div class="models-grid">
+        <div class="model-card">
+          <div class="model-number">01</div>
+          <div class="model-role">Primary Model</div>
+          <div class="model-title">The Frankie Set Girl</div>
+          <div class="model-desc">Young, 20-24 energy. She carries the whole campaign. The vibe is confident but not try-hard — she moves like she belongs everywhere. All five looks depend on her energy reading right on camera.</div>
+          <div class="model-looks"><span class="model-look-tag">Look 1</span><span class="model-look-tag">Look 2</span><span class="model-look-tag">Look 3</span><span class="model-look-tag">Look 4</span><span class="model-look-tag">Style Swap</span></div>
+          <div class="model-confirm-note">Confirm availability, outfit sizes, and shoe size before booking shoot day. Test shot session recommended if first time working together.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-number">02</div>
+          <div class="model-role">Supporting · Look 5 (Style Swap)</div>
+          <div class="model-title">The Friends</div>
+          <div class="model-desc">2-3 friends who each style the bubble skirt their own way. Casual energy — these are real people, not professional models. They just need to look natural on camera and have their own sense of style. Each one brings a different vibe to the same skirt.</div>
+          <div class="model-looks"><span class="model-look-tag">Style Swap</span></div>
+          <div class="model-confirm-note">Confirm each friend's sizes and have them bring their own tops/shoes/accessories so the styling feels authentic to each person.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM NOTES -->
+  <section class="section">
+    <div class="container">
+      <div class="team-notes-section">
+        <div class="team-notes-title">Team Notes — Frankie Set</div>
+        <textarea class="team-notes-area" id="notes-frankie" placeholder="Add team notes, feedback, or shoot day updates here..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-brand">Che <em>Orika</em></div>
+    <div class="footer-sub">The Frankie Set · Campaign Brief</div>
+    <div class="footer-divider"></div>
+    <div class="footer-note">This brief is a living document. Shoot day decisions override everything here. Trust the team, trust the energy, get the shots.</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     ALISE TOPS
+     ═══════════════════════════════════════════════════════ -->
+<div class="campaign-panel" id="alise">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image-panel">
+      <img src="https://res.cloudinary.com/dp1rqomsd/image/upload/cheorika/production/brands/2f0536ad-4aae-476f-b006-2a8119bc0c4a/products/fed63634-f807-4d16-be3b-f65ee54c0415/vt50sqdluesnu6pjafso" alt="Alise Top - Blue" />
+      <img src="https://res.cloudinary.com/dp1rqomsd/image/upload/cheorika/production/brands/2f0536ad-4aae-476f-b006-2a8119bc0c4a/products/fed63634-f807-4d16-be3b-f65ee54c0415/k6k3nuwzlomursg6lntj" alt="Alise Top - Purple" />
+      <img src="https://res.cloudinary.com/dp1rqomsd/image/upload/cheorika/production/brands/2f0536ad-4aae-476f-b006-2a8119bc0c4a/products/fed63634-f807-4d16-be3b-f65ee54c0415/lqxhxc0d9vopfgni6rrp" alt="Alise Top - Green" />
+      <div class="hero-image-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Che Orika · Campaign Brief</div>
+      <h1 class="hero-title">The<em>Alise</em>Tops</h1>
+      <p class="hero-subtitle">"The elevated basic you didn't know you needed."</p>
+      <div class="hero-meta">
+        <div class="hero-meta-row">Product &nbsp;<span>Mesh Long-Sleeve Tops · 3 Colours</span></div>
+        <div class="hero-meta-row">Palette &nbsp;<span>Blue Swirl / Green Tie-Dye / Purple Hearts</span></div>
+        <div class="hero-meta-row">Setting &nbsp;<span>In-Store + Outdoor · Abuja</span></div>
+        <div class="hero-meta-row">Models &nbsp;<span>2 Models (Campaign) + 1 Model (This or That)</span></div>
+        <div class="hero-meta-row">Platform &nbsp;<span>Instagram · TikTok</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOUR STRIP -->
+  <div class="color-strip">
+    <div class="swatch swatch-blue">Blue Swirl</div>
+    <div class="swatch swatch-green">Green Tie-Dye</div>
+    <div class="swatch swatch-purple">Purple Hearts</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONCEPT -->
+  <section class="concept-section">
+    <div class="concept-inner">
+      <div class="section-label">02 · The Concept</div>
+      <h2 class="section-title" style="color:white;">The Mesh Top is an <em>Elevated Basic</em></h2>
+      <p class="concept-pull-quote">
+        It's obviously just a long sleeve shirt.<br/>
+        But it's mesh. It's a little bit see-through.<br/>
+        And that adds a <strong>completely different vibe</strong>.
+      </p>
+      <p class="concept-body">
+        The Alise Top is the most versatile piece in your closet. Pair it with a leather mini skirt and it's a going-out top. Throw it over capri pants and it's elevated casual. Wear it with jeans and a structured bag and it's an actual outfit. Three colours, endless pairings — dress it up or dress it down. Shot in-store to keep the focus on the product and the styling.
+      </p>
+      <div class="concept-keywords">
+        <span class="keyword-pill">In-Store</span>
+        <span class="keyword-pill">Bold Colour</span>
+        <span class="keyword-pill">Elevated Basic</span>
+        <span class="keyword-pill">See-Through Confidence</span>
+        <span class="keyword-pill">Versatile</span>
+        <span class="keyword-pill">Dress Up / Dress Down</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTENT SCRIPT -->
+  <section class="script-section" style="background:var(--sand);padding:5rem 0;">
+    <div class="container">
+      <div class="script-card">
+        <div class="script-label" style="color:var(--pool);">Voiceover Script · Educational Reel</div>
+        <p class="script-text" style="color:var(--deep);">
+          "If you struggle to find good closet basics — just like <strong style="background:linear-gradient(to bottom, transparent 60%, rgba(72,191,227,0.2) 60%);">simple shirts</strong> that you can either dress up or dress down, something cute, casual, comfortable, but a little bit more <strong style="background:linear-gradient(to bottom, transparent 60%, rgba(72,191,227,0.2) 60%);">elevated</strong> — is this not literally the perfect shirt? Like, it's obviously just a long sleeve shirt, but it's mesh. It's a little bit see-through, so you can see the bra, so I feel like it adds like a <strong style="background:linear-gradient(to bottom, transparent 60%, rgba(72,191,227,0.2) 60%);">completely different vibe</strong> to the outfit."
+        </p>
+        <div class="script-note" style="border-top:1px solid var(--pool-faint);color:var(--warm-light);">
+          <strong>How to film this:</strong> Voiceover plays while showing quick cuts of the mesh top paired with different bottoms — leather mini skirt, capri pants, jeans with a cute bag. Each cut is 2-3 seconds. The viewer sees multiple outfit changes in 15 seconds. End with "I wear this all the time" over different outfit pairings.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MOOD BOARD -->
+  <section class="section" id="alise-moodboard">
+    <div class="container">
+      <div class="section-label">03 · Mood Board</div>
+      <h2 class="section-title">The Vibe,<em>Visualised</em></h2>
+      <div class="moodboard-grid">
+        <div class="mood-item featured"><img src="ref_beach_mesh.png" alt="Beach mesh reference" /><div class="mood-overlay-label">Mesh at the Water · Bold Print, Sunglasses</div></div>
+        <div class="mood-item"><img src="ref_color_group.png" alt="Color group reference" /><div class="mood-overlay-label">Bold Colour Group · Editorial</div></div>
+        <div class="mood-item"><img src="ref_pool_swimsuit.png" alt="Pool reference" /><div class="mood-overlay-label">Poolside · Warm Tones, Confidence</div></div>
+        <div class="mood-item"><img src="ref_rooftop_lounger.jpg" alt="Rooftop lounger reference" /><div class="mood-overlay-label">Lounger · Bold Print, Sunglasses</div></div>
+        <div class="mood-item"><img src="ref_pool_stripes.png" alt="Pool stripes reference" /><div class="mood-overlay-label">Pool Edge · Colour Pop, Bucket Hat</div></div>
+        <div class="mood-item"><img src="ref_pink_hat.png" alt="Pink hat reference" /><div class="mood-overlay-label">Beach · Hat, Solo, Confident</div></div>
+        <div class="mood-item"><img src="ref_pink_lounger.png" alt="Pink lounger reference" /><div class="mood-overlay-label">Lounging · Resort, Relaxed Pose</div></div>
+        <div class="mood-item"><img src="ref_headscarf_match.png" alt="Headscarf match reference" /><div class="mood-overlay-label">Matching Accessories · Headscarf + Outfit</div></div>
+        <div class="mood-item"><img src="ref_editorial_pair.png" alt="Editorial pair reference" /><div class="mood-overlay-label">Two Models · Editorial Contrast</div></div>
+        <div class="mood-item"><img src="ref_black_mesh.png" alt="Black mesh reference" /><div class="mood-overlay-label">Mesh Styling · Layered, Confident</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THE SCENES -->
+  <section class="section" id="alise-scenes">
+    <div class="container">
+      <div class="section-label">04 · The Scenes</div>
+      <h2 class="section-title">Shoot Day<em>Breakdown</em></h2>
+      <div class="looks-intro"><p>Four content setups. The first three shoot in-store — focus on the product, the colours, and the styling options. Scene 4 is future outdoor content captured naturally, not a planned shoot.</p></div>
+
+      <!-- SCENE 1 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">01</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 1 · The Transition</div><h3 class="look-title">Same Skirt, Different Top<em>All 3 Mesh Tops · Leather Mini Skirt · In-Store</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">One model, same leather mini skirt, swapping through different mesh tops (blue, green, purple). Each top changes the whole energy of the outfit</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">In-store against a clean background. Ring light or natural light from windows</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Energy</div><div class="look-meta-value">Quick cuts and transitions. Same base outfit, completely different vibe with each colour swap</div></div>
+          </div>
+          <div class="look-note">This is the hero content. The transitions need to be clean — same angle, same framing, just the top changes. Each colour should feel like a different outfit entirely.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-alise-1-1"><div class="shot-checkbox"></div><span class="shot-label">Full body with blue top + leather mini skirt</span></div>
+            <div class="shot-item" data-id="master-alise-1-2"><div class="shot-checkbox"></div><span class="shot-label">Quick transition cut to green top, same skirt</span></div>
+            <div class="shot-item" data-id="master-alise-1-3"><div class="shot-checkbox"></div><span class="shot-label">Transition to purple top, same skirt</span></div>
+            <div class="shot-item" data-id="master-alise-1-4"><div class="shot-checkbox"></div><span class="shot-label">Close-up of mesh fabric detail with each colour</span></div>
+            <div class="shot-item" data-id="master-alise-1-5"><div class="shot-checkbox"></div><span class="shot-label">Side-by-side comparison frame if possible <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-alise-1-6"><div class="shot-checkbox"></div><span class="shot-label">Individual colour portraits <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 2 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">02</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 2 · Styling Options</div><h3 class="look-title">One Top, Different Bottoms<em>Each Mesh Top Styled Differently · In-Store</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">Blue Top</div><div class="look-meta-value">Blue mesh top + capri pants, full body. Different bottom = different vibe from the same top</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Green Top</div><div class="look-meta-value">Green mesh top + leather mini skirt, full body. The going-out version</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Purple Top</div><div class="look-meta-value">Purple mesh top + jeans and structured bag, full body. The casual elevated version</div></div>
+          </div>
+          <div class="look-note">Each pairing shows a different use case for the mesh top. The point is versatility — same product, completely different occasions.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-alise-2-1"><div class="shot-checkbox"></div><span class="shot-label">Blue top + capri pants full body</span></div>
+            <div class="shot-item" data-id="master-alise-2-2"><div class="shot-checkbox"></div><span class="shot-label">Green top + leather mini skirt full body</span></div>
+            <div class="shot-item" data-id="master-alise-2-3"><div class="shot-checkbox"></div><span class="shot-label">Purple top + jeans and structured bag full body</span></div>
+            <div class="shot-item" data-id="master-alise-2-4"><div class="shot-checkbox"></div><span class="shot-label">Close-up of each pairing's details <span class="shot-type">Detail</span></span></div>
+            <div class="shot-item" data-id="master-alise-2-5"><div class="shot-checkbox"></div><span class="shot-label">Walking shots in each outfit</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">03</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 3 · The Detail Shots</div><h3 class="look-title">Product Close-Ups<em>All 3 Colours · In-Store</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">Focus</div><div class="look-meta-value">Close-ups. The mesh fabric against skin. How the print looks. How the bralette shows through. Product-focused content for website and ads</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">In-store, good lighting. Ring light or natural window light. Clean background</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Purpose</div><div class="look-meta-value">Website headers, ad assets, product page content. These are the shots that sell the fabric and the quality</div></div>
+          </div>
+          <div class="look-note">These are the most important shots for e-commerce. Take your time with lighting and angles. The mesh fabric needs to look premium, not cheap.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-alise-3-1"><div class="shot-checkbox"></div><span class="shot-label">Close-up mesh fabric texture — each colour</span></div>
+            <div class="shot-item" data-id="master-alise-3-2"><div class="shot-checkbox"></div><span class="shot-label">Bralette visible through mesh — showing the layering</span></div>
+            <div class="shot-item" data-id="master-alise-3-3"><div class="shot-checkbox"></div><span class="shot-label">Hands adjusting the top / tucking it in</span></div>
+            <div class="shot-item" data-id="master-alise-3-4"><div class="shot-checkbox"></div><span class="shot-label">Flat lay of all three colours together <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-alise-3-5"><div class="shot-checkbox"></div><span class="shot-label">Each top on hanger with accessories styled around it <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 4 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">04</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 4 · Friends Content (Future)</div><h3 class="look-title">Real Moments Out<em>Outdoor · Whenever It Happens Naturally</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">What This Is</div><div class="look-meta-value">When friends go out naturally wearing the mesh tops, capture real content outdoors. Not a planned shoot — real moments</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Why Not Now</div><div class="look-meta-value">Forced outdoor content feels staged. Real outdoor content happens when someone is actually wearing the top out and someone grabs a photo or video</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">When</div><div class="look-meta-value">Whenever it happens. Restaurant, bar, event, walking around. This is ongoing content, not shoot day content</div></div>
+          </div>
+          <div class="look-note">This is NOT for the main shoot day. This is a reminder to capture content later when people are actually wearing the tops out. Phone photos that feel authentic, not staged.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-alise-4-1"><div class="shot-checkbox"></div><span class="shot-label">Candid outdoor moments whenever they happen</span></div>
+            <div class="shot-item" data-id="master-alise-4-2"><div class="shot-checkbox"></div><span class="shot-label">Real restaurant / bar / event content</span></div>
+            <div class="shot-item" data-id="master-alise-4-3"><div class="shot-checkbox"></div><span class="shot-label">Phone photos that feel authentic, not staged</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THIS OR THAT -->
+  <section class="tot-section" id="alise-thisorthat">
+    <div class="container">
+      <div class="section-label">05 · This or That Content</div>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">The 10 <em>Questions</em></h2>
+      <p style="color:var(--pool-light);opacity:0.7;font-size:0.9rem;margin-bottom:3rem;max-width:600px;">Three models, each in a different Alise Top colour. Question pops up on screen. They react — pointing, shaking heads, laughing, picking sides. Quick cuts between questions. Playful energy, not posed.</p>
+      <div class="tot-grid">
+        <div class="tot-card"><div class="tot-number">01</div><div class="tot-question">Know your future<span class="tot-vs">or change your past?</span></div></div>
+        <div class="tot-card"><div class="tot-number">02</div><div class="tot-question">Be 18 again knowing what you know now<span class="tot-vs">or skip to 40 with everything figured out?</span></div></div>
+        <div class="tot-card"><div class="tot-number">03</div><div class="tot-question">Everyone knows your salary<span class="tot-vs">or everyone knows your body count?</span></div></div>
+        <div class="tot-card"><div class="tot-number">04</div><div class="tot-question">Date someone who loves you more<span class="tot-vs">or someone you love more?</span></div></div>
+        <div class="tot-card"><div class="tot-number">05</div><div class="tot-question">Marry for love with nothing<span class="tot-vs">or marry for comfort without passion?</span></div></div>
+        <div class="tot-card"><div class="tot-number">06</div><div class="tot-question">Be the smartest person in the room<span class="tot-vs">or the most liked?</span></div></div>
+        <div class="tot-card"><div class="tot-number">07</div><div class="tot-question">Rich in Nigeria<span class="tot-vs">or average abroad?</span></div></div>
+        <div class="tot-card"><div class="tot-number">08</div><div class="tot-question">Have your dream career but no time<span class="tot-vs">or an average job with all the free time?</span></div></div>
+        <div class="tot-card"><div class="tot-number">09</div><div class="tot-question">Be beautiful with no talent<span class="tot-vs">or talented with average looks?</span></div></div>
+        <div class="tot-card"><div class="tot-number">10</div><div class="tot-question">Never eat jollof rice again<span class="tot-vs">or never eat suya again?</span></div></div>
+        <div class="tot-note">
+          <strong>How to film:</strong> All three girls in frame — or rotating in/out. One reads the question off-screen (or text pops up). They react, point at each other, pick sides. Quick energy. Film all 10 back-to-back in one session — takes 15-20 minutes. Each question becomes its own 10-15 second reel. The tops are visible the whole time but the conversation has nothing to do with fashion — that's the point. People come for the question, stay for the outfit.
+          <br/><br/>
+          <strong>The purple Alise Top appears here.</strong> All three colours get equal screen time across 10 questions without forcing the purple into the campaign storyline.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WARDROBE -->
+  <section class="section wardrobe-section" id="alise-wardrobe">
+    <div class="container">
+      <div class="section-label">06 · Accessories &amp; Wardrobe</div>
+      <h2 class="section-title" style="color:white;">What We<em>Need on Set</em></h2>
+      <div class="wardrobe-grid">
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Tops &amp; Bottoms</div>
+          <div class="wardrobe-item" data-id="master-alise-w1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Blue Alise Top (swirl print)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Green Alise Top (tie-dye)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Purple Alise Top (hearts gradient)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Black bralette (for under blue top)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Nude/brown bralette (for under green/purple top)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w6"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Leather mini skirt</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w7"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Denim shorts</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w8"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Capri pants (if available)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-w9"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Jeans</span></div>
+        </div>
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Shoes &amp; Bags</div>
+          <div class="wardrobe-item" data-id="master-alise-ws1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Flat slides</span></div>
+          <div class="wardrobe-item" data-id="master-alise-ws2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Strappy sandals</span></div>
+          <div class="wardrobe-item" data-id="master-alise-ws3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Heeled mules (for trouser look)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-ws4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Small crossbody bag</span></div>
+          <div class="wardrobe-item" data-id="master-alise-ws6"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Cute structured bag (for jeans pairing)</span></div>
+        </div>
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Accessories &amp; Props</div>
+          <div class="wardrobe-item" data-id="master-alise-wa1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Bold sunglasses (2 pairs minimum)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Bucket hat</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Headscarf (colour that works with green top)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Hoop earrings</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Gold chain necklace (minimal)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa6"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Statement bracelet</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa7"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Fruit plate (watermelon, grapes — colourful)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa8"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Cold drinks (coloured, in nice glasses)</span></div>
+          <div class="wardrobe-item" data-id="master-alise-wa9"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Phone (prop for candid shots)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LOCATIONS -->
+  <section class="section" id="alise-locations">
+    <div class="container">
+      <div class="section-label">07 · Location</div>
+      <h2 class="section-title">Where We<em>Shoot</em></h2>
+      <div class="locations-grid">
+        <div class="location-card"><span class="location-icon">&#127978;</span><div class="location-name">In-Store — Primary</div><div class="location-desc">The Che Orika store. Clean background, good lighting, enough space for outfit changes. Ring light or natural light from windows. This is where all main shoot day content happens — the transitions, the styling options, the detail shots, and the This or That content.</div><div class="location-look-tags"><span class="loc-tag">Scene 1</span><span class="loc-tag">Scene 2</span><span class="loc-tag">Scene 3</span><span class="loc-tag">This or That</span></div></div>
+        <div class="location-card"><span class="location-icon">&#127774;</span><div class="location-name">Outdoor (Future)</div><div class="location-desc">Real locations when wearing the tops out naturally. No planned outdoor shoot for now — capture content whenever someone is genuinely wearing the mesh top out. Restaurants, bars, events, walking around Abuja. Phone content that feels real.</div><div class="location-look-tags"><span class="loc-tag">Scene 4 (Future)</span></div></div>
+        <div class="location-note"><strong>Location Strategy:</strong> Everything shoots in-store on the main shoot day. Set up the store with good lighting and a clean background area. Have all three tops, all bottoms, and all accessories ready for quick outfit changes. The outdoor content happens naturally over time — don't force it.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTENT PLAN -->
+  <section class="section" id="alise-content">
+    <div class="container">
+      <div class="section-label">08 · Post-Production Plan</div>
+      <h2 class="section-title">What We're<em>Making From This</em></h2>
+      <div class="content-grid">
+        <div class="content-card"><span class="content-type-badge">Campaign</span><div class="content-card-title">Campaign Video</div><div class="content-card-source">30-45 sec. The showstopper. Music-driven, no voiceover. Quick transitions between colours and styling options. <strong>Pulls from:</strong> Scenes 1-3</div></div>
+        <div class="content-card"><span class="content-type-badge">Educational</span><div class="content-card-title">"The Elevated Basic" Script</div><div class="content-card-source">15-20 sec. Voiceover over quick outfit changes. Mesh + shorts, mesh + skirt, mesh + capris, mesh + jeans. <strong>Pulls from:</strong> Extra outfit clips</div></div>
+        <div class="content-card"><span class="content-type-badge">This or That</span><div class="content-card-title">10 Question Reels</div><div class="content-card-source">10-15 sec each. Three models, all three colours. One question per reel. <strong>Pulls from:</strong> This or That session</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">"Same Top, 4 Bottoms"</div><div class="content-card-source">Quick cuts: denim shorts, mini skirt, capri pants, wide-leg trousers. Versatility proof. <strong>Pulls from:</strong> Extra outfit clips</div></div>
+        <div class="content-card"><span class="content-type-badge">BTS</span><div class="content-card-title">Behind the Scenes</div><div class="content-card-source">Candid shoot day clips. Setting up, directing, laughing between takes. <strong>Pulls from:</strong> All day</div></div>
+        <div class="content-card"><span class="content-type-badge">Carousel</span><div class="content-card-title">Photo Carousel</div><div class="content-card-source">Best stills from all scenes. Editorial format — alternating solo + pair shots. <strong>Pulls from:</strong> All photo shots</div></div>
+        <div class="content-card"><span class="content-type-badge">Stories</span><div class="content-card-title">Story Content</div><div class="content-card-source">Polls ("which colour?"), quick clips, product close-ups, styling comparisons. <strong>Pulls from:</strong> All scenes</div></div>
+        <div class="content-card"><span class="content-type-badge">Product</span><div class="content-card-title">Individual Colour Showcases</div><div class="content-card-source">Each colour solo. Clean, well-lit, in-store background. For website headers + ads. <strong>Pulls from:</strong> Scene 1 + Scene 3</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MODELS -->
+  <section class="section models-section" id="alise-models">
+    <div class="container">
+      <div class="section-label">09 · Models</div>
+      <h2 class="section-title">Who We<em>Need</em></h2>
+      <div class="models-grid three-col">
+        <div class="model-card">
+          <div class="model-number">01</div>
+          <div class="model-role">Lead Model · Campaign</div>
+          <div class="model-title">The Blue Top Girl</div>
+          <div class="model-desc">She carries the main campaign content — the transition shots, styling options, and detail content. Confident, relaxed energy. Looks natural on camera, not stiff. She needs to move well through quick outfit changes in-store.</div>
+          <span class="model-color-badge badge-blue">Blue Alise Top</span>
+          <div class="model-looks"><span class="model-look-tag">Scene 1</span><span class="model-look-tag">Scene 2</span><span class="model-look-tag">Scene 3</span><span class="model-look-tag">This or That</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-number">02</div>
+          <div class="model-role">Supporting Model · Campaign</div>
+          <div class="model-title">The Green Top Girl</div>
+          <div class="model-desc">Warm, easy to laugh, good chemistry with Model 1. She helps with the styling scenes and brings different energy to the in-store content. The hat/headscarf look needs to suit her face shape — test it before shoot day.</div>
+          <span class="model-color-badge badge-green">Green Alise Top</span>
+          <div class="model-looks"><span class="model-look-tag">Scene 2</span><span class="model-look-tag">Scene 3</span><span class="model-look-tag">This or That</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-number">03</div>
+          <div class="model-role">This or That Model</div>
+          <div class="model-title">The Purple Top Girl</div>
+          <div class="model-desc">She appears in the This or That reels alongside Models 1 and 2. Expressive face — she needs to be able to react, laugh, point, and pick sides on camera. Energy is playful and opinionated.</div>
+          <span class="model-color-badge badge-purple">Purple Alise Top</span>
+          <div class="model-looks"><span class="model-look-tag">This or That</span><span class="model-look-tag">Product Photos</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM NOTES -->
+  <section class="section">
+    <div class="container">
+      <div class="team-notes-section">
+        <div class="team-notes-title">Team Notes — Alise Tops</div>
+        <textarea class="team-notes-area" id="notes-alise" placeholder="Add team notes, feedback, or shoot day updates here..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-brand">Che <em>Orika</em></div>
+    <div class="footer-sub">The Alise Tops · Campaign Brief</div>
+    <div class="footer-divider"></div>
+    <div class="footer-note">This brief is a living document. Shoot day decisions override everything here. Trust the team, trust the energy, get the shots.</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     DIVA PLAYSUIT
+     ═══════════════════════════════════════════════════════ -->
+<div class="campaign-panel" id="diva">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image-panel">
+      <img src="diva_front.png" alt="Diva Playsuit - Front" />
+      <img src="diva_back.png" alt="Diva Playsuit - Back (Cowl Drape)" />
+      <div class="hero-image-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Che Orika · Campaign Brief</div>
+      <h1 class="hero-title">The<em>Diva</em>Playsuit</h1>
+      <p class="hero-subtitle">"She doesn't fit."</p>
+      <div class="hero-meta">
+        <div class="hero-meta-row">Product &nbsp;<span>Burgundy Shimmer Playsuit · Cowl Back</span></div>
+        <div class="hero-meta-row">Fabric &nbsp;<span>Glitter Knit · Catches Light</span></div>
+        <div class="hero-meta-row">Sizes &nbsp;<span>S - XXL</span></div>
+        <div class="hero-meta-row">Models &nbsp;<span>3 Models · 3 Sizes · 3 Ways</span></div>
+        <div class="hero-meta-row">Setting &nbsp;<span>Fruit Market + Supermarket · Abuja</span></div>
+        <div class="hero-meta-row">Platform &nbsp;<span>Instagram · TikTok</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONCEPT -->
+  <section class="concept-section">
+    <div class="concept-inner">
+      <div class="section-label">02 · The Concept</div>
+      <p class="concept-pull-quote">
+        She walked into the market<br/>in a playsuit and heels.<br/>
+        She <strong>doesn't fit</strong>.<br/>
+        That's the point.
+      </p>
+      <p class="concept-body">
+        The Diva Playsuit is for the girl who's overdressed everywhere she goes — and she knows it. Put her in a fruit market, she stands out. Put her in Shoprite, she stands out. Put her on a couch waiting to leave, and the playsuit does everything. Burgundy shimmer, long sleeves, cowl back that flips to the front. One piece, three ways to wear it, and she didn't need anyone to tell her how.
+      </p>
+      <div class="concept-keywords">
+        <span class="keyword-pill">Overdressed</span>
+        <span class="keyword-pill">Contrast</span>
+        <span class="keyword-pill">Burgundy Shimmer</span>
+        <span class="keyword-pill">Body Confidence</span>
+        <span class="keyword-pill">3 Ways</span>
+        <span class="keyword-pill">She Doesn't Fit</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THREE WAYS -->
+  <section class="section" id="diva-ways">
+    <div class="container">
+      <div class="section-label">03 · One Playsuit, Three Ways</div>
+      <h2 class="section-title">How She<em>Wears It</em></h2>
+      <div class="ways-grid">
+        <div class="way-card"><div class="way-number">01</div><div class="way-title">As Designed</div><div class="way-desc">Round neck at the front, cowl drape at the back. Covered, clean, the shimmer in the fabric does all the talking. This is the "dinner with his family" version — elegant but the playsuit shape still shows body.</div></div>
+        <div class="way-card"><div class="way-number">02</div><div class="way-title">Flipped</div><div class="way-desc">Cowl neck worn at the FRONT. Now you get that draped neckline showing chest and decolletage. The back becomes the plain round neck. Same playsuit, completely different energy — this is the "going out, want people to look" version.</div></div>
+        <div class="way-card"><div class="way-number">03</div><div class="way-title">Off-Shoulder</div><div class="way-desc">Cowl neck at the front but pulled off one shoulder. Shows collarbone, asymmetric, unexpected. This is the third way nobody told you about — the "I styled it myself" moment.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THREE SIZES SCRIPTS -->
+  <section class="section scripts-section" id="diva-scripts">
+    <div class="container">
+      <div class="section-label">04 · Three Sizes, Three Voices</div>
+      <h2 class="section-title" style="color:white;">What Each Model<em>Says</em></h2>
+      <div class="script-grid">
+        <div class="script-card-diva">
+          <div class="script-model-tag">Model 1</div>
+          <div class="script-size">Size Small</div>
+          <div class="script-height">5'4 · Petite frame</div>
+          <div class="script-text-diva">"So I'm wearing a size small. I'm like 5'4, and honestly the length on this is perfect for me — it hits right here and it doesn't ride up when I walk. I'm wearing it with the cowl neck in the front so it's more covered, and I feel like this is how you'd wear it to like a dinner or something where you want to look put together but you don't want to do too much. The sleeves are long which I love because I don't have to think about what jacket to bring."</div>
+        </div>
+        <div class="script-card-diva">
+          <div class="script-model-tag">Model 2</div>
+          <div class="script-size">Size Medium</div>
+          <div class="script-height">5'7 · Athletic build</div>
+          <div class="script-text-diva">"I'm a medium, 5'7. What I like about this is that you can actually flip it — so right now the cowl neck is at my back and the front is giving more body. Same playsuit, completely different energy. Like this is the version you wear when you want people to look. And because it's fitted, everything just sits. I paired it with gold earrings and heels and that's literally all you need."</div>
+        </div>
+        <div class="script-card-diva">
+          <div class="script-model-tag">Model 3</div>
+          <div class="script-size">Size Large / XL</div>
+          <div class="script-height">5'9 · Curvy</div>
+          <div class="script-text-diva">"I'm wearing a large, I'm 5'9. First of all, the colour — this burgundy on my skin tone? Please. And the fabric has a slight shimmer so when the light catches it, it does something. I wore it with the cowl neck at the front but I pulled it off one shoulder a little — like a third way to wear it that nobody told you about. The shorts are short but they're not uncomfortable, like I can actually sit down in this and not worry."</div>
+        </div>
+        <div class="script-note-diva">
+          <strong>How to film:</strong> Each model stands in the same spot, same background, same lighting. They talk directly to camera like they're talking to a friend, not presenting. Each one demonstrates their way of wearing the playsuit while they talk. Quick cuts between them. The vibe is three friends who all own the same piece and wear it differently — not a fashion show. End with all three standing together, same angle as the Sabo reference.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MOOD BOARD -->
+  <section class="section" id="diva-moodboard">
+    <div class="container">
+      <div class="section-label">05 · Mood Board</div>
+      <h2 class="section-title">The Vibe,<em>Visualised</em></h2>
+      <div class="moodboard-grid">
+        <div class="mood-item featured"><img src="diva_front.png" alt="Diva Playsuit Front" /><div class="mood-overlay-label">Diva Playsuit · Front · Round Neck</div></div>
+        <div class="mood-item"><img src="diva_back.png" alt="Diva Playsuit Back" /><div class="mood-overlay-label">Cowl Drape Back · Flips to Front</div></div>
+        <div class="mood-item"><img src="ref_fruit_market_1.png" alt="Fruit market reference" /><div class="mood-overlay-label">Fruit Market · Overdressed, Colourful</div></div>
+        <div class="mood-item"><img src="ref_grocery_store.png" alt="Grocery store reference" /><div class="mood-overlay-label">Grocery Store · She Doesn't Fit</div></div>
+        <div class="mood-item"><img src="ref_london_sun.png" alt="London sun reference" /><div class="mood-overlay-label">Underdressed? Never · City Street</div></div>
+        <div class="mood-item"><img src="ref_sabo_three_sizes.png" alt="Three sizes reference" /><div class="mood-overlay-label">Three Sizes · Three Ways · Sabo Reference</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THE SCENES -->
+  <section class="section" id="diva-scenes">
+    <div class="container">
+      <div class="section-label">06 · The Scenes</div>
+      <h2 class="section-title">Shoot Day<em>Breakdown</em></h2>
+      <div class="looks-intro"><p>Three content setups across two locations plus one indoor session. The market video and the three-sizes video are separate content pieces — don't combine them. The couch format is filmed on a different day or at a separate indoor location.</p></div>
+
+      <!-- SCENE 1 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">01</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 1 · Option A — Local Market</div><h3 class="look-title">She Doesn't Fit<em>Diva Playsuit · Fruit Market Stalls</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Diva Playsuit (cowl at back), gold heels, statement earrings, small clutch or nothing — she's not here to shop</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Local fruit market — Wuse Market or similar. Colourful stalls, fruit displays, real people around her going about their day</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Why It Works</div><div class="look-meta-value">Maximum contrast. Burgundy shimmer playsuit + heels against tomatoes, oranges, market women. She's a diva and the environment proves it</div></div>
+          </div>
+          <div class="look-note">The people around her are NOT extras. They're real market-goers. That's what makes it work — she's the only one who looks like this, and neither she nor anyone else is making a big deal of it. She's just... there.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-diva-1-1"><div class="shot-checkbox"></div><span class="shot-label">Walking between market stalls, full body, from the front — fruit on both sides</span></div>
+            <div class="shot-item" data-id="master-diva-1-2"><div class="shot-checkbox"></div><span class="shot-label">Picks up a fruit (orange, mango), looks at it, puts it back — she's not buying</span></div>
+            <div class="shot-item" data-id="master-diva-1-3"><div class="shot-checkbox"></div><span class="shot-label">Wide shot from behind — her walking through the market, people around her in regular clothes</span></div>
+            <div class="shot-item" data-id="master-diva-1-4"><div class="shot-checkbox"></div><span class="shot-label">Close-up: shimmer fabric catching natural light, fruit colours blurred in background <span class="shot-type">Key</span></span></div>
+            <div class="shot-item" data-id="master-diva-1-5"><div class="shot-checkbox"></div><span class="shot-label">Standing at a fruit display, one hand on hip — someone in the background glancing at her</span></div>
+            <div class="shot-item" data-id="master-diva-1-6"><div class="shot-checkbox"></div><span class="shot-label">Walking away from camera, heels on market ground, cowl drape visible <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-diva-1-7"><div class="shot-checkbox"></div><span class="shot-label">Full body portrait against colourful fruit backdrop <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 2 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">02</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 2 · Option B — Supermarket</div><h3 class="look-title">Still Doesn't Fit<em>Diva Playsuit · Grocery Aisle</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Diva Playsuit (cowl at front — flipped version), gold heels, woven or structured bag on arm, sunglasses pushed up on head</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Shoprite, SPAR, or any clean supermarket with a good produce section. The fluorescent lighting actually makes the shimmer pop differently</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Why It Works</div><div class="look-meta-value">Subtler contrast than the local market. She doesn't look wildly out of place — she just looks better than everyone else. That's diva energy. Not loud, just... clearly not here to buy groceries</div></div>
+          </div>
+          <div class="look-note">Show a different way of wearing the playsuit here (cowl at front) so the two market videos also double as a "two ways to wear it" comparison if you edit them together.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-diva-2-1"><div class="shot-checkbox"></div><span class="shot-label">Pushing a trolley through the produce aisle — playsuit + heels, everyone else in jeans</span></div>
+            <div class="shot-item" data-id="master-diva-2-2"><div class="shot-checkbox"></div><span class="shot-label">Reaching for something on a shelf — long sleeve catches the light</span></div>
+            <div class="shot-item" data-id="master-diva-2-3"><div class="shot-checkbox"></div><span class="shot-label">Standing by the fruit section, checking her phone, trolley beside her</span></div>
+            <div class="shot-item" data-id="master-diva-2-4"><div class="shot-checkbox"></div><span class="shot-label">Close-up: cowl drape at the front this time, showing the neckline difference <span class="shot-type">Detail</span></span></div>
+            <div class="shot-item" data-id="master-diva-2-5"><div class="shot-checkbox"></div><span class="shot-label">Walking past the checkout, bag on arm, not buying anything — she was never shopping <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">03</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 3 · Three Sizes, Three Ways</div><h3 class="look-title">Same Playsuit, Different Girl<em>All 3 Models · Clean Background</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">Setup</div><div class="look-meta-value">Clean background — plain wall, good lighting, no distractions. Each model stands in the same spot and talks to camera</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Each Model Shows</div><div class="look-meta-value">A different way to wear the playsuit: Model 1 = cowl front (covered), Model 2 = cowl back (body), Model 3 = off-shoulder (styled)</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Ending</div><div class="look-meta-value">All three stand together in one frame — different sizes, different styling, same playsuit. This is the thumbnail / final frame</div></div>
+          </div>
+          <div class="look-note">Each model talks for 10-15 seconds. Total video = 30-45 seconds. They're talking like friends, not presenting. Quick cuts between them. See Section 04 for the full scripts.</div>
+          <div class="shots-heading">Key Shots</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-diva-3-1"><div class="shot-checkbox"></div><span class="shot-label">Model 1 talking to camera — cowl front, turns to show how it sits</span></div>
+            <div class="shot-item" data-id="master-diva-3-2"><div class="shot-checkbox"></div><span class="shot-label">Model 2 talking to camera — cowl back, does a spin to show body</span></div>
+            <div class="shot-item" data-id="master-diva-3-3"><div class="shot-checkbox"></div><span class="shot-label">Model 3 talking to camera — off-shoulder, pulls it to show the move</span></div>
+            <div class="shot-item" data-id="master-diva-3-4"><div class="shot-checkbox"></div><span class="shot-label">All three together, same frame — hero shot <span class="shot-type">Hero Photo</span></span></div>
+            <div class="shot-item" data-id="master-diva-3-5"><div class="shot-checkbox"></div><span class="shot-label">Close-up of fabric shimmer under studio/ring light <span class="shot-type">Detail</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 4 -->
+      <div class="look-card">
+        <div class="look-number-col"><div class="look-number">04</div><div class="look-line"></div></div>
+        <div class="look-content">
+          <div class="look-header"><div class="look-tag">Scene 4 · The Couch</div><h3 class="look-title">Somewhere Between Getting Dressed<em>and Losing Track of Time</em></h3></div>
+          <div class="look-meta-grid">
+            <div class="look-meta-item"><div class="look-meta-label">She Wears</div><div class="look-meta-value">Diva Playsuit, heels OFF (beside the couch), gold earrings already on. She's dressed but hasn't left yet</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Location</div><div class="look-meta-value">Indoor — nice living room, clean couch, warm lighting. Not a studio — it should feel like someone's actual home</div></div>
+            <div class="look-meta-item"><div class="look-meta-label">Energy</div><div class="look-meta-value">No voiceover. Just music. She's killing time. Every movement is a new angle of the playsuit without it feeling like a product video</div></div>
+          </div>
+          <div class="look-note">This is a separate content piece — NOT part of the market campaign video. Film it on a different day or at a different location entirely. It's a standalone reel with the caption: "somewhere between getting dressed and losing track of time"</div>
+          <div class="shots-heading">Quick Cuts (all on the couch)</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-diva-4-1"><div class="shot-checkbox"></div><span class="shot-label">Sitting, flipping through a magazine</span></div>
+            <div class="shot-item" data-id="master-diva-4-2"><div class="shot-checkbox"></div><span class="shot-label">Adjusting an earring, looking at nothing</span></div>
+            <div class="shot-item" data-id="master-diva-4-3"><div class="shot-checkbox"></div><span class="shot-label">Leaning back, crossing legs — playsuit silhouette changes</span></div>
+            <div class="shot-item" data-id="master-diva-4-4"><div class="shot-checkbox"></div><span class="shot-label">On a phone call, laughing at something</span></div>
+            <div class="shot-item" data-id="master-diva-4-5"><div class="shot-checkbox"></div><span class="shot-label">Brushing hair, looking in a small mirror</span></div>
+            <div class="shot-item" data-id="master-diva-4-6"><div class="shot-checkbox"></div><span class="shot-label">Reaching down to put on heels, buckling the strap</span></div>
+            <div class="shot-item" data-id="master-diva-4-7"><div class="shot-checkbox"></div><span class="shot-label">Stands up, checks herself one more time</span></div>
+            <div class="shot-item" data-id="master-diva-4-8"><div class="shot-checkbox"></div><span class="shot-label">Walks out the door — final frame</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WARDROBE -->
+  <section class="section wardrobe-section" id="diva-wardrobe">
+    <div class="container">
+      <div class="section-label">07 · Accessories &amp; Wardrobe</div>
+      <h2 class="section-title" style="color:white;">What We<em>Need on Set</em></h2>
+      <div class="wardrobe-grid">
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">The Playsuit</div>
+          <div class="wardrobe-item" data-id="master-diva-w1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Diva Playsuit — Size Small</span></div>
+          <div class="wardrobe-item" data-id="master-diva-w2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Diva Playsuit — Size Medium</span></div>
+          <div class="wardrobe-item" data-id="master-diva-w3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Diva Playsuit — Size Large / XL</span></div>
+          <div class="wardrobe-item" data-id="master-diva-w4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Nude seamless underwear (all 3 sizes)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-w5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Sticky bra / nipple covers (fitted fabric)</span></div>
+        </div>
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Shoes &amp; Bags</div>
+          <div class="wardrobe-item" data-id="master-diva-ws1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Gold heels (strappy)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-ws2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Nude heels (pointed)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-ws3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Black heels (backup option)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-ws4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Small clutch (gold or nude)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-ws5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Structured bag (for supermarket scene)</span></div>
+        </div>
+        <div class="wardrobe-category">
+          <div class="wardrobe-cat-title">Accessories &amp; Props</div>
+          <div class="wardrobe-item" data-id="master-diva-wa1"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Gold statement earrings</span></div>
+          <div class="wardrobe-item" data-id="master-diva-wa2"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Gold bracelet / bangle</span></div>
+          <div class="wardrobe-item" data-id="master-diva-wa3"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Thin gold chain necklace</span></div>
+          <div class="wardrobe-item" data-id="master-diva-wa4"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Sunglasses (for supermarket scene)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-wa5"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Magazine (for couch scene)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-wa6"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Small mirror (for couch scene)</span></div>
+          <div class="wardrobe-item" data-id="master-diva-wa7"><div class="wardrobe-checkbox"></div><span class="wardrobe-item-label">Phone (prop)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LOCATIONS -->
+  <section class="section" id="diva-locations">
+    <div class="container">
+      <div class="section-label">08 · Locations</div>
+      <h2 class="section-title">Where We<em>Shoot</em></h2>
+      <div class="locations-grid">
+        <div class="location-card"><span class="location-icon">&#127819;</span><div class="location-name">Option A — Local Fruit Market</div><div class="location-desc">Wuse Market or any open-air market in Abuja with colourful fruit displays. Need: real people around (not staged), enough space for the model to walk between stalls, good natural light. The messier and more colourful the market, the bigger the contrast with the burgundy playsuit.</div><div class="location-look-tags"><span class="loc-tag">Scene 1</span></div></div>
+        <div class="location-card"><span class="location-icon">&#128722;</span><div class="location-name">Option B — Supermarket</div><div class="location-desc">Shoprite, SPAR, or any clean supermarket with a good produce aisle. The fluorescent lighting makes the shimmer fabric pop differently than outdoor light. Need: permission to film (or film quickly and discreetly), a trolley, and enough space in the aisle for shots.</div><div class="location-look-tags"><span class="loc-tag">Scene 2</span></div></div>
+        <div class="location-card"><span class="location-icon">&#127916;</span><div class="location-name">Clean Background (Studio/Wall)</div><div class="location-desc">For the three-sizes video. Plain wall, good ring light or natural window light. Can be a studio, someone's apartment with a clean wall, or even a well-lit corner of the store. Keep it simple — the playsuit and the girls are the focus.</div><div class="location-look-tags"><span class="loc-tag">Scene 3</span></div></div>
+        <div class="location-card"><span class="location-icon">&#128715;</span><div class="location-name">Living Room (Couch Scene)</div><div class="location-desc">A real living room with a nice couch. Warm lighting — lamp light, not overhead. Should feel like an actual home, not a studio set. The couch needs to look good on camera — solid colour, no distracting patterns. Film this on a separate day.</div><div class="location-look-tags"><span class="loc-tag">Scene 4</span></div></div>
+        <div class="location-note"><strong>Schedule:</strong> Scenes 1-3 can be done on the same day. Start at the market early (8-10am for good light and active market energy), move to the supermarket mid-day, then do the three-sizes studio session in the afternoon. Scene 4 (couch) is a separate shoot day — different location, different energy, don't rush it.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTENT PLAN -->
+  <section class="section" id="diva-content">
+    <div class="container">
+      <div class="section-label">09 · Post-Production Plan</div>
+      <h2 class="section-title">What We're<em>Making From This</em></h2>
+      <div class="content-grid">
+        <div class="content-card"><span class="content-type-badge">Campaign</span><div class="content-card-title">"She Doesn't Fit" — Market Video</div><div class="content-card-source">30-45 sec. Music-driven, no voiceover. Her walking through the market, standing out. <strong>Pulls from:</strong> Scene 1 and/or Scene 2</div></div>
+        <div class="content-card"><span class="content-type-badge">Product</span><div class="content-card-title">Three Sizes, Three Ways</div><div class="content-card-source">30-45 sec. Three models talking to camera about fit. Voiceover scripts. <strong>Pulls from:</strong> Scene 3</div></div>
+        <div class="content-card"><span class="content-type-badge">Lifestyle</span><div class="content-card-title">"Somewhere Between Getting Dressed..."</div><div class="content-card-source">15-20 sec. Music only, no voiceover. Couch moments. <strong>Pulls from:</strong> Scene 4</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">One Playsuit, Three Ways</div><div class="content-card-source">Quick cuts: cowl front, cowl back, off-shoulder. Same model or all three. <strong>Pulls from:</strong> Scene 3</div></div>
+        <div class="content-card"><span class="content-type-badge">Ad</span><div class="content-card-title">Market Campaign as Ad</div><div class="content-card-source">The hero market video re-cut as a 15-sec ad. Hook: her walking into the market. <strong>Pulls from:</strong> Scene 1/2</div></div>
+        <div class="content-card"><span class="content-type-badge">BTS</span><div class="content-card-title">Behind the Scenes</div><div class="content-card-source">Candid shoot day clips. Market reactions, styling between takes, funny moments. <strong>Pulls from:</strong> All day</div></div>
+        <div class="content-card"><span class="content-type-badge">Carousel</span><div class="content-card-title">Photo Carousel</div><div class="content-card-source">Best stills — market shots, three-sizes group shot, couch portraits. <strong>Pulls from:</strong> All photo shots</div></div>
+        <div class="content-card"><span class="content-type-badge">Stories</span><div class="content-card-title">Story Content</div><div class="content-card-source">Polls ("which way would you wear it?"), fabric close-ups, size guide clips. <strong>Pulls from:</strong> All scenes</div></div>
+        <div class="content-card"><span class="content-type-badge">Reel</span><div class="content-card-title">Walking Reel</div><div class="content-card-source">Slow-mo walking shot, body confidence energy, shimmer catching light. Music. <strong>Pulls from:</strong> Scene 1/2</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MODELS -->
+  <section class="section models-section" id="diva-models">
+    <div class="container">
+      <div class="section-label">10 · Models</div>
+      <h2 class="section-title">Who We<em>Need</em></h2>
+      <div class="models-grid three-col">
+        <div class="model-card">
+          <div class="model-number">01</div>
+          <div class="model-role">Lead Model · Petite</div>
+          <div class="model-title">Size Small · 5'3-5'5</div>
+          <div class="model-desc">She does the market scenes and the three-sizes video. Needs to carry confidence in heels at a market — not awkward, not performing. The kind of girl who walks through a market in a playsuit because she doesn't know how to dress down.</div>
+          <div class="model-looks"><span class="model-look-tag">Scene 1</span><span class="model-look-tag">Scene 2</span><span class="model-look-tag">Scene 3</span><span class="model-look-tag">Scene 4</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-number">02</div>
+          <div class="model-role">Second Model · Mid-Size</div>
+          <div class="model-title">Size Medium · 5'6-5'8</div>
+          <div class="model-desc">Three-sizes video. Athletic or slim build. She talks naturally on camera — not stiff. Shows the "flipped" version of the playsuit (cowl at back, more body showing).</div>
+          <div class="model-looks"><span class="model-look-tag">Scene 3</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-number">03</div>
+          <div class="model-role">Third Model · Curvy / Plus-Size</div>
+          <div class="model-title">Size Large-XL · 5'8+</div>
+          <div class="model-desc">Three-sizes video. Curvy or plus-size. She shows the playsuit on a bigger frame and proves it fits WELL — not stretched, not tight in the wrong places. The off-shoulder styling is hers. Confident, expressive, the kind of energy where she says "this burgundy on my skin tone? Please" and you believe her.</div>
+          <div class="model-looks"><span class="model-look-tag">Scene 3</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM NOTES -->
+  <section class="section">
+    <div class="container">
+      <div class="team-notes-section">
+        <div class="team-notes-title">Team Notes — Diva Playsuit</div>
+        <textarea class="team-notes-area" id="notes-diva" placeholder="Add team notes, feedback, or shoot day updates here..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-brand">Che <em>Orika</em></div>
+    <div class="footer-sub">The Diva Playsuit · Campaign Brief</div>
+    <div class="footer-divider"></div>
+    <div class="footer-note">This brief is a living document. Shoot day decisions override everything here. Trust the team, trust the energy, get the shots.</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SOPHIE DRESS
+     ═══════════════════════════════════════════════════════ -->
+<div class="campaign-panel" id="sophie">
+
+  <!-- Hero -->
+  <section style="background:linear-gradient(135deg, #F5F0EB, #E8E0D6); padding:4rem 0;">
+    <div class="container">
+      <div style="max-width:700px;">
+        <div class="section-label" style="color:#8B7355;">Che Orika · Quick Shoot</div>
+        <h1 style="font-family:'Playfair Display',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:900; line-height:0.95; color:var(--warm); margin-bottom:0.5rem;">The<br><em style="font-style:italic;font-weight:400;">Sophie</em><br>Dress</h1>
+        <p style="font-family:'Playfair Display',serif; font-size:1.1rem; font-style:italic; color:var(--warm-light); margin:1.5rem 0 2rem;">"Just walking."</p>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; border-top:1px solid rgba(139,115,85,0.2); padding-top:1.5rem;">
+          <div class="hero-meta-row" style="color:var(--warm-light);">Product &nbsp;<span style="font-weight:600;color:var(--warm);">Sleeveless Mini Dress · Light Neutral</span></div>
+          <div class="hero-meta-row" style="color:var(--warm-light);">Vibe &nbsp;<span style="font-weight:600;color:var(--warm);">Nonchalant · Morning · Street · Candid</span></div>
+          <div class="hero-meta-row" style="color:var(--warm-light);">Setting &nbsp;<span style="font-weight:600;color:var(--warm);">Outdoor · Walking · Crossing Roads</span></div>
+          <div class="hero-meta-row" style="color:var(--warm-light);">Models &nbsp;<span style="font-weight:600;color:var(--warm);">1 Model</span></div>
+          <div class="hero-meta-row" style="color:var(--warm-light);">Shoot Time &nbsp;<span style="font-weight:600;color:var(--warm);">Quick — Morning, 30-45 mins max</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <section style="background:var(--warm); color:#D4C5A9; padding:4rem 0;">
+    <div class="container" style="max-width:700px; text-align:center;">
+      <div class="section-label" style="color:#8B7355;">The Concept</div>
+      <p style="font-family:'Playfair Display',serif; font-size:clamp(1.4rem,2.5vw,2rem); font-style:italic; color:white; line-height:1.4; margin-bottom:2rem;">
+        She's not doing anything special.<br>She's just walking. Handbag on her arm.<br>Crossing the road. <strong style="color:#D4C5A9;font-style:normal;">That's the content.</strong>
+      </p>
+      <p style="font-size:0.9rem; line-height:1.8; opacity:0.8;">
+        No styled photoshoot. No location scouting. Just a girl in the Sophie Dress walking outside in the morning. Nonchalant street energy. She looks good and she's not trying. A few walking shots, a few portrait shots, done.
+      </p>
+    </div>
+  </section>
+
+  <!-- The Shots -->
+  <section class="section" style="background:var(--ivory);">
+    <div class="container">
+      <div class="section-label" style="color:#8B7355;">The Shots</div>
+      <h2 class="section-title">What We<em>Need</em></h2>
+
+      <div style="display:grid; grid-template-columns:80px 1fr; gap:0 3rem;">
+        <div style="display:flex;flex-direction:column;align-items:center;padding-top:0.3rem;">
+          <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:var(--espresso-faint);line-height:1;">01</div>
+          <div style="width:1px;flex:1;background:var(--espresso-faint);margin-top:1rem;min-height:40px;"></div>
+        </div>
+        <div>
+          <div style="margin-bottom:2.5rem;">
+            <div class="look-tag" style="color:#8B7355;">Walking Shots</div>
+            <h3 class="look-title">Just Walking<em>Sophie Dress · Street · Morning Light</em></h3>
+          </div>
+          <div class="look-meta-grid" style="background:var(--espresso-faint);">
+            <div class="look-meta-item">
+              <div class="look-meta-label" style="color:#8B7355;">She Wears</div>
+              <div class="look-meta-value">Sophie Dress, handbag on arm, comfortable shoes or heels — whatever she'd actually walk in</div>
+            </div>
+            <div class="look-meta-item">
+              <div class="look-meta-label" style="color:#8B7355;">Location</div>
+              <div class="look-meta-value">Outside — streets, crossing a road, walking past shops. Morning light. Nothing fancy, just a clean-ish street.</div>
+            </div>
+            <div class="look-meta-item">
+              <div class="look-meta-label" style="color:#8B7355;">Energy</div>
+              <div class="look-meta-value">Nonchalant. She's going somewhere, not posing. The camera is catching her, not directing her.</div>
+            </div>
+          </div>
+
+          <div class="shots-heading" style="color:#8B7355; margin-top:2rem;">Shot List</div>
+          <div class="shots-grid">
+            <div class="shot-item" data-id="master-sophie-1"><div class="shot-checkbox"></div><span class="shot-label">Walking toward camera, full body, handbag on arm</span></div>
+            <div class="shot-item" data-id="master-sophie-2"><div class="shot-checkbox"></div><span class="shot-label">Crossing the road — mid-stride, natural movement</span></div>
+            <div class="shot-item" data-id="master-sophie-3"><div class="shot-checkbox"></div><span class="shot-label">Walking away from camera — dress movement from behind</span></div>
+            <div class="shot-item" data-id="master-sophie-4"><div class="shot-checkbox"></div><span class="shot-label">Walking past a shop / building — environment in frame, she's passing through</span></div>
+            <div class="shot-item" data-id="master-sophie-5"><div class="shot-checkbox"></div><span class="shot-label">Close-up from waist up while walking — dress neckline, handbag strap, face in profile</span></div>
+            <div class="shot-item" data-id="master-sophie-6"><div class="shot-checkbox"></div><span class="shot-label">Pausing to check phone or adjust bag — candid moment, not posed</span></div>
+            <div class="shot-item" data-id="master-sophie-7"><div class="shot-checkbox"></div><span class="shot-label">Standing portrait, full body — natural light, street background <span class="shot-type">Photo</span></span></div>
+            <div class="shot-item" data-id="master-sophie-8"><div class="shot-checkbox"></div><span class="shot-label">Close-up portrait, face + shoulders + dress neckline <span class="shot-type">Photo</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wardrobe -->
+  <section class="section" style="background:var(--warm); color:#D4C5A9;">
+    <div class="container">
+      <div class="section-label" style="color:#8B7355;">Wardrobe</div>
+      <h2 class="section-title" style="color:white;">What She<em>Needs</em></h2>
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; max-width:600px;">
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:white;margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(212,197,169,0.15);">Outfit</div>
+          <div class="wardrobe-item" data-id="master-sophie-w1"><div class="wardrobe-checkbox" style="border-color:rgba(212,197,169,0.3);"></div><span class="wardrobe-item-label">Sophie Dress</span></div>
+          <div class="wardrobe-item" data-id="master-sophie-w2"><div class="wardrobe-checkbox" style="border-color:rgba(212,197,169,0.3);"></div><span class="wardrobe-item-label">Handbag</span></div>
+          <div class="wardrobe-item" data-id="master-sophie-w3"><div class="wardrobe-checkbox" style="border-color:rgba(212,197,169,0.3);"></div><span class="wardrobe-item-label">Shoes (heels or comfortable walking shoes)</span></div>
+        </div>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:white;margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(212,197,169,0.15);">Accessories</div>
+          <div class="wardrobe-item" data-id="master-sophie-w4"><div class="wardrobe-checkbox" style="border-color:rgba(212,197,169,0.3);"></div><span class="wardrobe-item-label">Earrings (small, simple)</span></div>
+          <div class="wardrobe-item" data-id="master-sophie-w5"><div class="wardrobe-checkbox" style="border-color:rgba(212,197,169,0.3);"></div><span class="wardrobe-item-label">Phone (prop — for candid moment)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Output -->
+  <section class="section" style="background:var(--ivory);">
+    <div class="container">
+      <div class="section-label" style="color:#8B7355;">Content Output</div>
+      <h2 class="section-title">What We<em>Get</em></h2>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;">
+        <div class="content-card" style="border-color:var(--espresso-faint);">
+          <span class="content-type-badge" style="background:var(--espresso-faint);color:var(--warm-light);">Reel</span>
+          <div class="content-card-title">Walking Reel</div>
+          <div class="content-card-source">15-20 sec. Music, no voiceover. Just her walking. <strong>Pulls from:</strong> Walking shots</div>
+        </div>
+        <div class="content-card" style="border-color:var(--espresso-faint);">
+          <span class="content-type-badge" style="background:var(--espresso-faint);color:var(--warm-light);">Carousel</span>
+          <div class="content-card-title">Street Portraits</div>
+          <div class="content-card-source">2-4 best stills. Clean, editorial. <strong>Pulls from:</strong> Photo shots</div>
+        </div>
+        <div class="content-card" style="border-color:var(--espresso-faint);">
+          <span class="content-type-badge" style="background:var(--espresso-faint);color:var(--warm-light);">Stories</span>
+          <div class="content-card-title">Quick Story Clips</div>
+          <div class="content-card-source">BTS, candid walking clips, product tag. <strong>Pulls from:</strong> All footage</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Notes -->
+  <section class="section" style="background:var(--espresso-faint); padding:3rem 0;">
+    <div class="container">
+      <div class="section-label" style="color:#8B7355;">Team Notes</div>
+      <textarea class="team-notes" data-campaign="sophie" placeholder="Add notes about the Sophie Dress shoot here..." style="width:100%;min-height:120px;padding:1.2rem;border:1px solid var(--blush-dark);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.88rem;line-height:1.7;color:var(--warm);background:white;resize:vertical;"></textarea>
+    </div>
+  </section>
+
+</div>
+<!-- ═════════════════════════════════════════════════════════
+     CREATIVE IDEAS
+     ═══════════════════════════════════════════════════════ -->
+<div class="campaign-panel" id="creative">
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label" style="color:var(--espresso-light);opacity:0.6;">Creative Concepts</div>
+      <h2 class="section-title" style="color:var(--espresso);">Content Ideas<em>Beyond the Shoots</em></h2>
+      <p style="font-size:0.95rem;color:var(--espresso-light);max-width:700px;margin-bottom:3rem;line-height:1.8;">Standalone content concepts that don't require a full shoot day. Some are ready to film, some need creative development. Each one is a separate content piece.</p>
+
+      <div class="creative-grid">
+
+        <!-- 1. What Nobody Sees -->
+        <div class="creative-card">
+          <div class="creative-card-header">
+            <div class="creative-card-title">"What Nobody Sees" (Founder BTS)</div>
+            <span class="creative-status status-concept">Concept Approved / Script Needs Cleanup</span>
+          </div>
+          <div class="creative-duration">40-60 seconds</div>
+          <div class="creative-desc">
+            Founder talking about real daily work. Camera on her, not screens. Website appears naturally twice. Voiceover needs human tone — not scripted-sounding, not presenting, just talking like she's explaining to a friend. The content is her process, her decisions, the parts of running a brand that nobody posts about. This is the "day in my life" version that's actually honest.
+          </div>
+        </div>
+
+        <!-- 2. The Obsession Concept -->
+        <div class="creative-card">
+          <div class="creative-card-header">
+            <div class="creative-card-title">The Obsession Concept</div>
+            <span class="creative-status status-needs-work">Needs Creative Session</span>
+          </div>
+          <div class="creative-duration">30-40 seconds</div>
+          <div class="creative-desc">
+            Girl screenshots CO Instagram post, keeps going back to it, tries to recreate the look from her own closet, can't get it right, finally buys. Needs a visual trick to show the "going back" moment — maybe the phone screen keeps popping up, or she keeps swiping back to the same saved post. Needs honest voiceover — internal monologue, not selling. To be developed with the full team in a creative session.
+          </div>
+        </div>
+
+        <!-- 3. The Zoom -->
+        <div class="creative-card">
+          <div class="creative-card-header">
+            <div class="creative-card-title">"The Zoom"</div>
+            <span class="creative-status status-approved">Approved</span>
+          </div>
+          <div class="creative-duration">10 seconds</div>
+          <div class="creative-desc">
+            Phone screen zooms into product photo on the website or Instagram. Match cut to real fabric on model — same angle, same framing. Two shots edited together. Clean, satisfying, works as an ad or organic content. The zoom-in on screen needs to match the zoom-out on the real product perfectly.
+          </div>
+        </div>
+
+        <!-- 4. The Tab -->
+        <div class="creative-card">
+          <div class="creative-card-header">
+            <div class="creative-card-title">"The Tab"</div>
+            <span class="creative-status status-approved">Approved</span>
+          </div>
+          <div class="creative-duration">10 seconds</div>
+          <div class="creative-desc">
+            Screen recording of someone scrolling through Safari tabs. Lots of random tabs open — news, social media, work stuff. One of them is cheorika.com. The scroll pauses on it for a beat. End card: "be honest." or just the logo. Simple, relatable, the kind of thing people screenshot and share.
+          </div>
+        </div>
+
+        <!-- 5. The Outfit Was Waiting -->
+        <div class="creative-card">
+          <div class="creative-card-header">
+            <div class="creative-card-title">"The Outfit Was Waiting"</div>
+            <span class="creative-status status-idea">Idea Stage</span>
+          </div>
+          <div class="creative-duration">10 seconds</div>
+          <div class="creative-desc">
+            The outfit has the confidence, not the girl. She goes back and forth — tries different things from her closet, nothing works, puts on the CO piece and everything clicks. The piece was waiting for her to stop overthinking. Needs development — the "back and forth" needs to be visual and quick, not a full try-on montage.
+          </div>
+        </div>
+
+        <!-- 6. This or That Questions -->
+        <div class="creative-card full-width">
+          <div class="creative-card-header">
+            <div class="creative-card-title">This or That Questions (Alise Tops Campaign)</div>
+            <span class="creative-status status-approved">Approved</span>
+          </div>
+          <div class="creative-duration">10 reels · 10-15 seconds each</div>
+          <div class="creative-desc" style="margin-bottom:1.5rem;">
+            Three models, each in a different Alise Top colour. Question pops up on screen. They react — pointing, shaking heads, laughing, picking sides. Quick cuts between questions. Playful energy, not posed. People come for the question, stay for the outfit.
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem 2rem;">
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">1.</strong> Know your future or change your past?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">2.</strong> Be 18 again knowing what you know now or skip to 40 with everything figured out?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">3.</strong> Everyone knows your salary or everyone knows your body count?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">4.</strong> Date someone who loves you more or someone you love more?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">5.</strong> Marry for love with nothing or marry for comfort without passion?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">6.</strong> Be the smartest person in the room or the most liked?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">7.</strong> Rich in Nigeria or average abroad?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">8.</strong> Have your dream career but no time or an average job with all the free time?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">9.</strong> Be beautiful with no talent or talented with average looks?</div>
+            <div style="font-size:0.85rem;color:var(--espresso);padding:0.4rem 0;"><strong style="color:var(--espresso-light);margin-right:0.5rem;">10.</strong> Never eat jollof rice again or never eat suya again?</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM NOTES -->
+  <section class="section">
+    <div class="container">
+      <div class="team-notes-section">
+        <div class="team-notes-title">Team Notes — Creative Ideas</div>
+        <textarea class="team-notes-area" id="notes-creative" placeholder="Add team notes, creative session outcomes, or development updates here..."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" style="background:var(--espresso);color:var(--blush);">
+    <div class="footer-brand" style="color:var(--ivory);">Che <em>Orika</em></div>
+    <div class="footer-sub" style="color:var(--blush);">Campaign Briefs · Creative Ideas</div>
+    <div class="footer-divider" style="background:rgba(240,221,208,0.25);"></div>
+    <div class="footer-note" style="color:var(--blush);">These ideas are living concepts. Develop them with the team before filming.</div>
+  </footer>
+</div>
+
+
+<!-- ─── EXPORT / IMPORT BAR ───────────────────────────────── -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(46,31,22,0.95);padding:0.6rem 2rem;display:flex;align-items:center;justify-content:flex-end;gap:0.8rem;backdrop-filter:blur(8px);">
+  <span style="font-size:0.68rem;color:var(--blush);opacity:0.5;letter-spacing:0.12em;text-transform:uppercase;margin-right:auto;">Team Annotations</span>
+  <button onclick="exportAnnotations()" style="padding:0.4rem 1rem;border-radius:4px;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(240,221,208,0.3);background:transparent;color:var(--blush);transition:background 0.15s;">Export JSON</button>
+  <button onclick="document.getElementById('importFile').click()" style="padding:0.4rem 1rem;border-radius:4px;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(240,221,208,0.3);background:transparent;color:var(--blush);transition:background 0.15s;">Import JSON</button>
+  <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importAnnotations(event)" />
+</div>
+<div style="height:44px;"></div>
+
+
+<!-- ─── JAVASCRIPT ─────────────────────────────────────────── -->
+<script>
+  // ── Tab switching ──
+  document.querySelectorAll('.nav-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.campaign-panel').forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      var panelId = tab.getAttribute('data-tab');
+      document.getElementById(panelId).classList.add('active');
+      window.scrollTo(0, 0);
+    });
+  });
+
+  // ── Checkbox toggle with localStorage (campaign-specific prefixes) ──
+  function initCheckboxes() {
+    document.querySelectorAll('.shot-item').forEach(function(item) {
+      var id = item.getAttribute('data-id');
+      if (!id) return;
+      if (localStorage.getItem(id) === 'checked') {
+        item.classList.add('checked');
+      }
+      item.addEventListener('click', function() {
+        item.classList.toggle('checked');
+        localStorage.setItem(id, item.classList.contains('checked') ? 'checked' : '');
+      });
+    });
+
+    document.querySelectorAll('.wardrobe-item').forEach(function(item) {
+      var id = item.getAttribute('data-id');
+      if (!id) return;
+      if (localStorage.getItem(id) === 'checked') {
+        item.classList.add('checked');
+      }
+      item.addEventListener('click', function() {
+        item.classList.toggle('checked');
+        localStorage.setItem(id, item.classList.contains('checked') ? 'checked' : '');
+      });
+    });
+  }
+
+  // ── Team Notes localStorage ──
+  function initNotes() {
+    ['notes-frankie', 'notes-alise', 'notes-diva', 'notes-creative'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var saved = localStorage.getItem(id);
+      if (saved) el.value = saved;
+      el.addEventListener('input', function() {
+        localStorage.setItem(id, el.value);
+      });
+    });
+  }
+
+  // ── Export annotations as JSON ──
+  function exportAnnotations() {
+    var data = { checkboxes: {}, notes: {} };
+
+    // Collect all checkbox states
+    document.querySelectorAll('.shot-item, .wardrobe-item').forEach(function(item) {
+      var id = item.getAttribute('data-id');
+      if (id && item.classList.contains('checked')) {
+        data.checkboxes[id] = true;
+      }
+    });
+
+    // Collect notes
+    ['notes-frankie', 'notes-alise', 'notes-diva', 'notes-creative'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.value.trim()) {
+        data.notes[id] = el.value;
+      }
+    });
+
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'che-orika-briefs-annotations.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ── Import annotations from JSON ──
+  function importAnnotations(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+
+        // Restore checkboxes
+        if (data.checkboxes) {
+          // Clear all first
+          document.querySelectorAll('.shot-item.checked, .wardrobe-item.checked').forEach(function(item) {
+            item.classList.remove('checked');
+            var id = item.getAttribute('data-id');
+            if (id) localStorage.setItem(id, '');
+          });
+          // Set imported
+          Object.keys(data.checkboxes).forEach(function(id) {
+            if (data.checkboxes[id]) {
+              localStorage.setItem(id, 'checked');
+              var el = document.querySelector('[data-id="' + id + '"]');
+              if (el) el.classList.add('checked');
+            }
+          });
+        }
+
+        // Restore notes
+        if (data.notes) {
+          Object.keys(data.notes).forEach(function(id) {
+            localStorage.setItem(id, data.notes[id]);
+            var el = document.getElementById(id);
+            if (el) el.value = data.notes[id];
+          });
+        }
+
+        alert('Annotations imported successfully.');
+      } catch (err) {
+        alert('Error reading file: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  // ── Init ──
+  document.addEventListener('DOMContentLoaded', function() {
+    initCheckboxes();
+    initNotes();
+  });
+</script>
+
+</body>
+</html>
